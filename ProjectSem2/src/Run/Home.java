@@ -39,59 +39,63 @@ public class Home extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         mnPlaces = new javax.swing.JMenu();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(0, 0));
         setPreferredSize(new java.awt.Dimension(622, 376));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 204));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Travel Management");
+        jLabel1.setText("Library Management");
         getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
         jLabel2.setText("IMG");
         getContentPane().add(jLabel2, java.awt.BorderLayout.CENTER);
 
-        mnTours.setText("Tours");
+        mnTours.setText("Books");
 
-        jMenuItem2.setText("Add Tour");
+        jMenuItem2.setText("Add Book");
         mnTours.add(jMenuItem2);
 
-        jMenuItem1.setText("ViewTour");
+        jMenuItem1.setText("View Books");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         mnTours.add(jMenuItem1);
 
-        jMenuItem3.setText("Modify Tour");
+        jMenuItem3.setText("Edit Book");
         mnTours.add(jMenuItem3);
 
         menuHome.add(mnTours);
 
-        mnCustomer.setText("Customer");
+        mnCustomer.setText("Students");
 
-        jMenuItem4.setText("Add Customer");
+        jMenuItem4.setText("Add Student");
         mnCustomer.add(jMenuItem4);
 
-        jMenuItem5.setText("Modify Customer");
+        jMenuItem5.setText("Modify Student");
         mnCustomer.add(jMenuItem5);
 
-        jMenuItem7.setText("Search Customer");
+        jMenuItem7.setText("Search Student");
         mnCustomer.add(jMenuItem7);
 
         menuHome.add(mnCustomer);
 
-        mnPlaces.setText("Places");
+        mnPlaces.setText("Borrow Book");
 
-        jMenuItem8.setText("Add Places");
-        mnPlaces.add(jMenuItem8);
+        jMenuItem6.setText("Create borrow book");
+        mnPlaces.add(jMenuItem6);
 
         jMenuItem9.setText("Modify Places");
         mnPlaces.add(jMenuItem9);
 
-        jMenuItem6.setText("jMenuItem6");
-        mnPlaces.add(jMenuItem6);
+        jMenuItem8.setText("List Borrow");
+        mnPlaces.add(jMenuItem8);
 
         menuHome.add(mnPlaces);
 
@@ -99,6 +103,10 @@ public class Home extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
