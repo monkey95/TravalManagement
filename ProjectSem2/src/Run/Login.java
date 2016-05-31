@@ -5,6 +5,10 @@
  */
 package Run;
 
+import GetConnect.MyConnect;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -118,9 +122,24 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        JOptionPane.showMessageDialog(null, "Abc", "Error", JOptionPane.ERROR_MESSAGE);
+//        JOptionPane.showMessageDialog(null, "Abc", "Error", JOptionPane.ERROR_MESSAGE);
         String username = txtUser.getText();
-        
+        String password = new String(txtPass.getPassword());
+        try {
+            Connection cn = MyConnect.getConnection();
+            CallableStatement callSt = cn.prepareCall("{call signIn(?)}");
+            callSt.setString(1, username);
+            ResultSet rs = callSt.executeQuery();
+            if (rs.next()){
+                if(password.equalsIgnoreCase(rs.getString("Password"))){
+                    this.setVisible(false);
+                    Home home = new Home();
+                    home.setVisible(true);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**

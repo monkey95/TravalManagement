@@ -11,7 +11,7 @@ create table Book(
 	IDType int foreign key references BookType(IDType),
 	BookName varchar(50),
 	AuthorId int foreign key references Author(AuthorID),
-	PublisherID int foreign key references Publisher(PublisherID) 
+	PublisherID int foreign key references Publisher(PublisherID), 
 	[Status] int
 )
 
@@ -32,6 +32,14 @@ create table Author(
 	AuthorName varchar(50),
 	AuthorAddress varchar(100),
 	AuthorPhone varchar(12)
+)
+
+create table BorrowList(
+	BorrowerName varchar(50),
+	PhoneNumber varchar(15),
+    IDBook int foreign key references Book(ID),
+	BorrowDate datetime,
+	ReturnDate datetime
 )
 
 select TenSach, Tomtat, TenLoai, TenNXB, Tentacgia 
@@ -61,6 +69,14 @@ select * from Book
 select * from Publisher
 select * from Author
 select * from BookType
+select * from Account where username = 'admin'
+
+create procedure signIn(
+	@username varchar(100)
+)as
+begin
+select * from Account where username = @username
+end
 
 --drop table Sach
 --drop table NhaXB
