@@ -51,13 +51,9 @@ insert into Publisher values('Kim Dong','55 Quang Trung, Ha Noi','0439434730')
 insert into Publisher values('Bo giao duc va dao tao','23 Quang Trung, Ha Noi','0439421429')
 insert into Publisher values('Nha XB Tre','209 Giang Vo','0437734544')
 
-insert into Author values('Bo GD & DT','23 Quang Trung, Ha Noi','0439421429')
-insert into Author values('Nhieu Tac Gia','Ha Noi','0438339999')
-insert into Author values('Nhieu Tac Gia','Ha Noi','0437777777')
-
-insert into Book values(3,'Tieng Viet lop 1',1,2,50,0)
-insert into Book values(2,'Day hoc tot toan 12',3,3,20,0)
-insert into Book values(4,'Than thoai Hy Lap',2,3,100,0)
+insert into Book values(3,'Tieng Viet lop 1',1,'Nguyen Trai',50,0)
+insert into Book values(2,'Day hoc tot toan 12',3,'Mai Anh Hung',20,0)
+insert into Book values(4,'Than thoai Hy Lap',2,'Le Ba Tran Phuong',100,0)
 
 select * from Book
 select * from Publisher
