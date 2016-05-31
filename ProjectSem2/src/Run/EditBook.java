@@ -38,9 +38,10 @@ public class EditBook extends javax.swing.JFrame {
         txtBTitle = new javax.swing.JTextField();
         txtPrice = new javax.swing.JTextField();
         txtAuthor = new javax.swing.JTextField();
-        txtPublisher = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         cbType = new javax.swing.JComboBox();
+        cbPublisher = new javax.swing.JComboBox();
+        btnAddPublisher = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -75,8 +76,6 @@ public class EditBook extends javax.swing.JFrame {
 
         txtAuthor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        txtPublisher.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel8.setText("Book Type");
 
@@ -87,6 +86,12 @@ public class EditBook extends javax.swing.JFrame {
                 cbTypeActionPerformed(evt);
             }
         });
+
+        cbPublisher.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbPublisher.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnAddPublisher.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnAddPublisher.setText("+");
 
         javax.swing.GroupLayout pnBookLayout = new javax.swing.GroupLayout(pnBook);
         pnBook.setLayout(pnBookLayout);
@@ -110,10 +115,16 @@ public class EditBook extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addGap(18, 18, 18)
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
+                    .addGroup(pnBookLayout.createSequentialGroup()
+                        .addComponent(cbPublisher, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAddPublisher))
+                    .addGroup(pnBookLayout.createSequentialGroup()
+                        .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 39, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         pnBookLayout.setVerticalGroup(
             pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +140,8 @@ public class EditBook extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel6)
                     .addComponent(txtBTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddPublisher))
                 .addGap(18, 18, 18)
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -147,9 +159,10 @@ public class EditBook extends javax.swing.JFrame {
         pnBook.setLayer(txtBTitle, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnBook.setLayer(txtPrice, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnBook.setLayer(txtAuthor, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtPublisher, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnBook.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnBook.setLayer(cbType, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(cbPublisher, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(btnAddPublisher, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         btnUpdate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnUpdate.setText("Update");
@@ -180,7 +193,7 @@ public class EditBook extends javax.swing.JFrame {
                 .addComponent(btnUpdate)
                 .addGap(109, 109, 109)
                 .addComponent(btnCancel)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,7 +212,7 @@ public class EditBook extends javax.swing.JFrame {
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUpdate)
                     .addComponent(btnCancel))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jLayeredPane1.setLayer(pnBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btnUpdate, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -274,8 +287,10 @@ public class EditBook extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddPublisher;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox cbPublisher;
     private javax.swing.JComboBox cbType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -290,6 +305,5 @@ public class EditBook extends javax.swing.JFrame {
     private javax.swing.JTextField txtBName;
     private javax.swing.JTextField txtBTitle;
     private javax.swing.JTextField txtPrice;
-    private javax.swing.JTextField txtPublisher;
     // End of variables declaration//GEN-END:variables
 }

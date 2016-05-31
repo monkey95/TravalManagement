@@ -10,7 +10,7 @@ create table Book(
 	ID int identity primary key,
 	IDType int foreign key references BookType(IDType),
 	BookName varchar(50),
-	AuthorId int foreign key references Author(AuthorID),
+	AuthorName varchar(50),
 	PublisherID int foreign key references Publisher(PublisherID), 
 	BookPrice int,
 	[Status] int
@@ -26,13 +26,6 @@ create table Publisher(
 	PublisherName varchar(100),
 	PublisherAddress varchar(100),
 	PublisherPhone varchar(12)
-)
-
-create table Author(
-	AuthorID int identity primary key,
-	AuthorName varchar(50),
-	AuthorAddress varchar(100),
-	AuthorPhone varchar(12)
 )
 
 create table BorrowList(
