@@ -12,6 +12,7 @@ create table Book(
 	BookName varchar(50),
 	AuthorId int foreign key references Author(AuthorID),
 	PublisherID int foreign key references Publisher(PublisherID), 
+	BookPrice int,
 	[Status] int
 )
 
@@ -61,9 +62,9 @@ insert into Author values('Bo GD & DT','23 Quang Trung, Ha Noi','0439421429')
 insert into Author values('Nhieu Tac Gia','Ha Noi','0438339999')
 insert into Author values('Nhieu Tac Gia','Ha Noi','0437777777')
 
-insert into Book values(3,'Tieng Viet lop 1',1,2, 0)
-insert into Book values(2,'Day hoc tot toan 12',3,3, 0)
-insert into Book values(4,'Than thoai Hy Lap',2,3, 0)
+insert into Book values(3,'Tieng Viet lop 1',1,2,50,0)
+insert into Book values(2,'Day hoc tot toan 12',3,3,20,0)
+insert into Book values(4,'Than thoai Hy Lap',2,3,100,0)
 
 select * from Book
 select * from Publisher

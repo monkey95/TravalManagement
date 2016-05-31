@@ -17,7 +17,7 @@ public class MyConnect {
         Connection cnn = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://DELL-PC:1433;databaseName=LibraryManagement";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=LibraryManagement";
             String id = "sa";
             String pass = "123456";
             cnn = DriverManager.getConnection(url, id, pass);
