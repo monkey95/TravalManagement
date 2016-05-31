@@ -7,33 +7,24 @@ create table Account(
 )
 
 create table Book(
-	ID int identity primary key,
-	IDType int foreign key references BookType(IDType),
+	ID varchar(50) primary key,
 	BookName varchar(50),
 	AuthorName varchar(50),
-	PublisherID int foreign key references Publisher(PublisherID), 
-	BookPrice int,
+	Publisher varchar(100),
 	[Status] int
 )
 
-create table BookType(
-	IDType int identity primary key,
-	TypeName varchar(50),
-)
-
-create table Publisher(
-	PublisherID int identity primary key,
-	PublisherName varchar(100),
-	PublisherAddress varchar(100),
-	PublisherPhone varchar(12)
-)
-
 create table BorrowList(
-	BorrowerName varchar(50),
-	PhoneNumber varchar(15),
-    IDBook int foreign key references Book(ID),
+	BorrowerID varchar(10) foreign key references Borrower(BorrowerID),
+    IDBook varchar(50) foreign key references Book(ID),
 	BorrowDate datetime,
 	ReturnDate datetime
+)
+
+create table Borrower(
+	BorrowerID varchar(10) primary key,
+	BorrowerName varchar(50),
+	PhoneNumber varchar(15)
 )
 
 select TenSach, Tomtat, TenLoai, TenNXB, Tentacgia 
@@ -44,21 +35,16 @@ inner join TacGia on Sach.MaTG = TacGia.MaTG
 
 insert into Account values ('admin', '123456')
 
-insert into BookType values('co tich'),('hoc tot')
-insert into BookType values('SGK'),('truyen tranh')
-
-insert into Publisher values('Kim Dong','55 Quang Trung, Ha Noi','0439434730')
-insert into Publisher values('Bo giao duc va dao tao','23 Quang Trung, Ha Noi','0439421429')
-insert into Publisher values('Nha XB Tre','209 Giang Vo','0437734544')
+insert into Book values('BK01','Tieng Viet lop 1','Nguyen Trai','Kim Dong',0)
+insert into Book values('BK02','Day hoc tot toan 12','Mai Anh Hung','Bo giao duc va dao tao',0)
+insert into Book values('BK03','Than thoai Hy Lap','Le Ba Tran Phuong','Nha XB Tre',0)
 
 insert into Book values(3,'Tieng Viet lop 1',1,'Nguyen Trai',50,0)
 insert into Book values(2,'Day hoc tot toan 12',3,'Mai Anh Hung',20,0)
 insert into Book values(4,'Than thoai Hy Lap',2,'Le Ba Tran Phuong',100,0)
 
 select * from Book
-select * from Publisher
-select * from Author
-select * from BookType
+select * from Borrower
 select * from Account where username = 'admin'
 
 create procedure signIn(
