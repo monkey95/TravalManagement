@@ -127,15 +127,25 @@ public class Login extends javax.swing.JFrame {
         String username = txtUser.getText();
         String password = new String(txtPass.getPassword());
         try {
-            Connection cn = MyConnect.getConnection();
-            CallableStatement callSt = cn.prepareCall("{call signIn(?)}");
-            callSt.setString(1, username);
-            ResultSet rs = callSt.executeQuery();
-            if (rs.next()){
-                if(password.equalsIgnoreCase(rs.getString("Password"))){
-                    this.setVisible(false);
-                    Home home = new Home();
-                    home.setVisible(true);
+            if (username.equals("")) {
+                JOptionPane.showMessageDialog(null, "Username cannot be blanked");
+            } else if (password.equals("")) {
+                JOptionPane.showMessageDialog(null, "Password cannot be blanked");
+            } else {
+                Connection cn = MyConnect.getConnection();
+                CallableStatement callSt = cn.prepareCall("{call signIn(?)}");
+                callSt.setString(1, username);
+                ResultSet rs = callSt.executeQuery();
+                if (rs.next()) {
+                    if (password.equalsIgnoreCase(rs.getString("Password"))) {
+                        this.setVisible(false);
+                        Home home = new Home();
+                        home.setVisible(true);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Username or password is incorrect");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Username or password is incorrect");
                 }
             }
         } catch (Exception e) {

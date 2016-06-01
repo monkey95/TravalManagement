@@ -5,6 +5,12 @@
  */
 package Run;
 
+import GetConnect.MyConnect;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author VuManh
@@ -31,16 +37,12 @@ public class AddBook extends javax.swing.JFrame {
         pnBook = new javax.swing.JLayeredPane();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        txtBookID = new javax.swing.JTextField();
         txtBName = new javax.swing.JTextField();
-        txtBTitle = new javax.swing.JTextField();
-        txtPrice = new javax.swing.JTextField();
         txtAuthor = new javax.swing.JTextField();
         txtPublisher = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        cbType = new javax.swing.JComboBox();
         btnCreate = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
@@ -55,13 +57,10 @@ public class AddBook extends javax.swing.JFrame {
         pnBook.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.white), "Book Information", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Times New Roman", 1, 24))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel2.setText("Book Name");
+        jLabel2.setText("Book ID");
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel3.setText("Book Title");
-
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel4.setText("Book Price");
+        jLabel3.setText("Book Name");
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel5.setText("Author Name");
@@ -69,26 +68,22 @@ public class AddBook extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel6.setText("Publisher Name");
 
+        txtBookID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         txtBName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        txtBTitle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        txtPrice.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txtAuthor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txtPublisher.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel8.setText("Book Type");
-
-        cbType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbTypeActionPerformed(evt);
-            }
-        });
+        pnBook.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtBookID, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtBName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtAuthor, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtPublisher, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout pnBookLayout = new javax.swing.GroupLayout(pnBook);
         pnBook.setLayout(pnBookLayout);
@@ -98,21 +93,17 @@ public class AddBook extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtBTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBName, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBookID, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(63, 63, 63)
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(40, Short.MAX_VALUE))
@@ -124,34 +115,16 @@ public class AddBook extends javax.swing.JFrame {
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel5)
-                    .addComponent(txtBName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBookID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel6)
-                    .addComponent(txtBTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(cbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
-        pnBook.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtBName, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtBTitle, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtPrice, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtAuthor, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtPublisher, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(cbType, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         btnCreate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnCreate.setText("Create");
@@ -180,6 +153,12 @@ public class AddBook extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 2, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 0, 255));
         jLabel1.setText("Add New Book");
+
+        jLayeredPane1.setLayer(pnBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnCreate, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnReset, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnCancel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -214,11 +193,6 @@ public class AddBook extends javax.swing.JFrame {
                     .addComponent(btnCancel))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
-        jLayeredPane1.setLayer(pnBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnCreate, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnReset, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnCancel, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -241,12 +215,40 @@ public class AddBook extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTypeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbTypeActionPerformed
-
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        // TODO add your handling code here:
+        String id = txtBookID.getText();
+        String bookName = txtBName.getText();
+        String author = txtAuthor.getText();
+        String publisher = txtPublisher.getText();
+        if (id.equals("")) {
+            JOptionPane.showMessageDialog(null, "Book ID cannot be blanked");
+        } else if (bookName.equals("")) {
+            JOptionPane.showMessageDialog(null, "Book Name cannot be blanked");
+        } else if (author.equals("")) {
+            JOptionPane.showMessageDialog(null, "Book Author cannot be blanked");
+        } else if (publisher.equals("")) {
+            JOptionPane.showMessageDialog(null, "Book Publisher cannot be blanked");
+        } else {
+            try {
+                Connection conn = MyConnect.getConnection();
+                PreparedStatement ps = conn.prepareStatement("insert into Book values(?,?,?,?,?)");
+                ps.setString(1, id);
+                ps.setString(2, bookName);
+                ps.setString(3, author);
+                ps.setString(4, publisher);
+                ps.setInt(5, 0);
+                int result = ps.executeUpdate();
+                if(result != 0){
+                    JOptionPane.showMessageDialog(null, "Book has been added");
+                    DefaultTableModel model = (DefaultTableModel) Home.tbBook.getModel();
+                    Object[] row = {id, bookName, author, publisher, "Available"};
+                    model.insertRow(0, row);
+                    this.dispose();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
@@ -254,9 +256,8 @@ public class AddBook extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        txtBookID.setText("");
         txtBName.setText("");
-        txtBTitle.setText("");
-        txtPrice.setText("");
         txtAuthor.setText("");
         txtPublisher.setText("");
     }//GEN-LAST:event_btnResetActionPerformed
@@ -301,20 +302,16 @@ public class AddBook extends javax.swing.JFrame {
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnReset;
-    private javax.swing.JComboBox cbType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane pnBook;
     private javax.swing.JTextField txtAuthor;
     private javax.swing.JTextField txtBName;
-    private javax.swing.JTextField txtBTitle;
-    private javax.swing.JTextField txtPrice;
+    private javax.swing.JTextField txtBookID;
     private javax.swing.JTextField txtPublisher;
     // End of variables declaration//GEN-END:variables
 }
