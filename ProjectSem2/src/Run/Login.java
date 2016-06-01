@@ -131,6 +131,11 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Username cannot be blanked");
             } else if (password.equals("")) {
                 JOptionPane.showMessageDialog(null, "Password cannot be blanked");
+            } 
+            if (username.length() > 25) {
+                JOptionPane.showMessageDialog(null, "Username is out of length");
+            } else if (password.length() > 20) {
+                JOptionPane.showMessageDialog(null, "Password is out of length");
             } else {
                 Connection cn = MyConnect.getConnection();
                 CallableStatement callSt = cn.prepareCall("{call signIn(?)}");

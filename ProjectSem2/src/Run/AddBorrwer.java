@@ -15,12 +15,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author VuManh
  */
-public class AddBook extends javax.swing.JFrame {
+public class AddBorrwer extends javax.swing.JFrame {
 
     /**
-     * Creates new form AddTours
+     * Creates new form AddBorrwer
      */
-    public AddBook() {
+    public AddBorrwer() {
         initComponents();
     }
 
@@ -39,42 +39,44 @@ public class AddBook extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtBookID = new javax.swing.JTextField();
-        txtBName = new javax.swing.JTextField();
-        txtAuthor = new javax.swing.JTextField();
-        txtPublisher = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
+        txtPhone = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtAddress = new javax.swing.JTextArea();
         btnCreate = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
 
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, java.awt.Color.lightGray));
 
         pnBook.setBackground(new java.awt.Color(0, 0, 0));
-        pnBook.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.white), "Book Information", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Times New Roman", 1, 24))); // NOI18N
+        pnBook.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.white), "Borrower Information", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Times New Roman", 1, 24))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Book ID");
+        jLabel2.setText("Name");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("Book Name");
+        jLabel3.setText("Phone number");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("Author Name");
+        jLabel5.setText("Address");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel6.setText("Publisher Name");
+        jLabel6.setText("Email");
 
-        txtBookID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        txtBName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtPhone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        txtAuthor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        txtPublisher.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtAddress.setColumns(20);
+        txtAddress.setRows(5);
+        jScrollPane1.setViewportView(txtAddress);
 
         javax.swing.GroupLayout pnBookLayout = new javax.swing.GroupLayout(pnBook);
         pnBook.setLayout(pnBookLayout);
@@ -88,11 +90,11 @@ public class AddBook extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
-                .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtBName, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBookID, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                    .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnBookLayout.setVerticalGroup(
@@ -101,29 +103,29 @@ public class AddBook extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtBookID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtBName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(txtAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(txtPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnBook.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnBook.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnBook.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnBook.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtBookID, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtBName, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtAuthor, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtPublisher, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtPhone, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         btnCreate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnCreate.setText("Create");
@@ -151,28 +153,26 @@ public class AddBook extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 2, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 0, 255));
-        jLabel1.setText("Add New Book");
+        jLabel1.setText("Add New Borrower");
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(534, 534, 534))
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(btnCreate)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnReset)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancel)))
+                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(pnBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                            .addGap(55, 55, 55)
+                            .addComponent(btnCreate)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnReset)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnCancel))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jLayeredPane1Layout.setVerticalGroup(
@@ -180,14 +180,14 @@ public class AddBook extends javax.swing.JFrame {
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(pnBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreate)
                     .addComponent(btnReset)
                     .addComponent(btnCancel))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jLayeredPane1.setLayer(pnBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btnCreate, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -201,50 +201,46 @@ public class AddBook extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLayeredPane1)
-                .addContainerGap())
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        String id = txtBookID.getText();
-        String bookName = txtBName.getText();
-        String author = txtAuthor.getText();
-        String publisher = txtPublisher.getText();
-        if (id.equals("")) {
+        String name = txtName.getText();
+        String phone = txtPhone.getText();
+        String address = txtAddress.getText();
+        String email = txtEmail.getText();
+        if (name.equals("")) {
             JOptionPane.showMessageDialog(null, "Book ID cannot be blanked");
-        } else if (bookName.equals("")) {
+        } else if (phone.equals("")) {
             JOptionPane.showMessageDialog(null, "Book Name cannot be blanked");
-        } else if (author.equals("")) {
+        } else if (address.equals("")) {
             JOptionPane.showMessageDialog(null, "Book Author cannot be blanked");
-        } else if (publisher.equals("")) {
+        } else if (email.equals("")) {
             JOptionPane.showMessageDialog(null, "Book Publisher cannot be blanked");
-        } if (id.length() > 7) {
-            JOptionPane.showMessageDialog(null, "Book ID out of length");
         } else {
             try {
                 Connection conn = MyConnect.getConnection();
-                PreparedStatement ps = conn.prepareStatement("insert into Book values(?,?,?,?,?)");
-                ps.setString(1, id);
-                ps.setString(2, bookName);
-                ps.setString(3, author);
-                ps.setString(4, publisher);
-                ps.setInt(5, 0);
+                PreparedStatement ps = conn.prepareStatement("insert into Borrower values(?,?,?,?)");
+                ps.setString(2, name);
+                ps.setString(3, phone);
+                ps.setString(4, address);
+                ps.setString(5, email);
                 int result = ps.executeUpdate();
                 if(result != 0){
                     JOptionPane.showMessageDialog(null, "Book has been added");
-                    DefaultTableModel model = (DefaultTableModel) Home.tbBook.getModel();
-                    Object[] row = {id, bookName, author, publisher, "Available"};
+                    DefaultTableModel model = (DefaultTableModel) ListBorrower.tbBorrower.getModel();
+                    Object[] row = {name,phone,address,email};
                     model.insertRow(0, row);
                     this.dispose();
                 }
@@ -254,16 +250,16 @@ public class AddBook extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCreateActionPerformed
 
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        txtName.setText("");
+        txtPhone.setText("");
+        txtAddress.setText("");
+        txtEmail.setText("");
+    }//GEN-LAST:event_btnResetActionPerformed
+
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
-
-    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        txtBookID.setText("");
-        txtBName.setText("");
-        txtAuthor.setText("");
-        txtPublisher.setText("");
-    }//GEN-LAST:event_btnResetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -282,21 +278,20 @@ public class AddBook extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddBook.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddBorrwer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddBook.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddBorrwer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddBook.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddBorrwer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddBook.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddBorrwer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddBook().setVisible(true);
+                new AddBorrwer().setVisible(true);
             }
         });
     }
@@ -311,10 +306,11 @@ public class AddBook extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLayeredPane pnBook;
-    private javax.swing.JTextField txtAuthor;
-    private javax.swing.JTextField txtBName;
-    private javax.swing.JTextField txtBookID;
-    private javax.swing.JTextField txtPublisher;
+    private javax.swing.JTextArea txtAddress;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPhone;
     // End of variables declaration//GEN-END:variables
 }

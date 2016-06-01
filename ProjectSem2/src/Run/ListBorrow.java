@@ -5,12 +5,18 @@
  */
 package Run;
 
+import GetConnect.MyConnect;
+import static Run.ListBorrower.tbBorrower;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author VuManh
  */
 public class ListBorrow extends javax.swing.JFrame {
-
     /**
      * Creates new form AddTours
      */
@@ -29,20 +35,20 @@ public class ListBorrow extends javax.swing.JFrame {
 
         jLayeredPane2 = new javax.swing.JLayeredPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblBorrow = new javax.swing.JTable();
+        tbBorrow = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnHome = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnReturn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         jLayeredPane2.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, java.awt.Color.lightGray));
 
-        tblBorrow.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tblBorrow.setModel(new javax.swing.table.DefaultTableModel(
+        tbBorrow.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tbBorrow.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -65,25 +71,25 @@ public class ListBorrow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblBorrow.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        tblBorrow.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        tblBorrow.setSurrendersFocusOnKeystroke(true);
-        jScrollPane1.setViewportView(tblBorrow);
+        tbBorrow.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tbBorrow.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tbBorrow.setSurrendersFocusOnKeystroke(true);
+        jScrollPane1.setViewportView(tbBorrow);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 2, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 0, 255));
         jLabel1.setText("Borrow Book List");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Home");
+        btnHome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnHome.setText("Home");
 
         txtSearch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Search By Borrower");
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("Returned Book");
+        btnReturn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnReturn.setText("Returned Book");
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
@@ -99,9 +105,9 @@ public class ListBorrow extends javax.swing.JFrame {
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(75, 75, 75))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnHome)
                         .addGap(203, 203, 203)
-                        .addComponent(jButton2)
+                        .addComponent(btnReturn)
                         .addGap(70, 70, 70))))
             .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane2Layout.createSequentialGroup()
@@ -120,8 +126,8 @@ public class ListBorrow extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnHome)
+                    .addComponent(btnReturn))
                 .addGap(21, 21, 21))
             .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane2Layout.createSequentialGroup()
@@ -131,10 +137,10 @@ public class ListBorrow extends javax.swing.JFrame {
         );
         jLayeredPane2.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(btnHome, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(txtSearch, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(btnReturn, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -194,13 +200,13 @@ public class ListBorrow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnHome;
+    private javax.swing.JButton btnReturn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblBorrow;
+    private javax.swing.JTable tbBorrow;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }
