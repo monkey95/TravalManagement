@@ -86,14 +86,14 @@ public class ListBorrower extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Phone Number", "Address", "Email"
+                "ID", "Name", "Phone Number", "Address", "Email"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                true, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
