@@ -24,6 +24,7 @@ public class EditBorrower extends javax.swing.JFrame {
 		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     Pattern p = Pattern.compile(email_valid);
     Matcher m ;
+    protected int id;
     /**
      * Creates new form EditBorrower
      */
@@ -84,6 +85,15 @@ public class EditBorrower extends javax.swing.JFrame {
 
         txtPhone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        pnBook.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtPhone, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout pnBookLayout = new javax.swing.GroupLayout(pnBook);
         pnBook.setLayout(pnBookLayout);
         pnBookLayout.setHorizontalGroup(
@@ -124,14 +134,6 @@ public class EditBorrower extends javax.swing.JFrame {
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        pnBook.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtName, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtPhone, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         btnUpdate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnUpdate.setText("Update");
@@ -152,6 +154,11 @@ public class EditBorrower extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 2, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 0, 255));
         jLabel1.setText("Edit Borrower");
+
+        jLayeredPane1.setLayer(pnBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnUpdate, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnCancel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -186,10 +193,6 @@ public class EditBorrower extends javax.swing.JFrame {
                     .addComponent(btnCancel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jLayeredPane1.setLayer(pnBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnUpdate, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnCancel, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -217,6 +220,7 @@ public class EditBorrower extends javax.swing.JFrame {
         String phone = txtPhone.getText();
         String address = txtAddress.getText();
         String email = txtEmail.getText();
+        m = p.matcher(email);
         if (name.equals("")) {
             JOptionPane.showMessageDialog(null, "Book ID cannot be blanked");
         } else if (phone.equals("")) {
@@ -235,6 +239,7 @@ public class EditBorrower extends javax.swing.JFrame {
                 ps.setString(2, phone);
                 ps.setString(3, address);
                 ps.setString(4, email);
+                ps.setInt(5, id);
                 int result = ps.executeUpdate();
                 if (result != 0) {
                     DefaultTableModel modelBorrower = (DefaultTableModel) ListBorrower.tbBorrower.getModel();
@@ -243,20 +248,14 @@ public class EditBorrower extends javax.swing.JFrame {
                     ResultSet rs = ps1.executeQuery();
                     while (rs.next()) {
                         String id = rs.getString("BorrowerID");
-                        String bName = rs.getString("BookName");
-                        String authorName = rs.getString("AuthorName");
-                        String bPublisher = rs.getString("Publisher");
-                        String statusString;
-                        int status = rs.getInt("Status");
-                        if (status == 0) {
-                            statusString = "Available";
-                        } else {
-                            statusString = "Lended";
-                        }
-                        Object[] row = {id, bName, authorName, bPublisher, statusString};
+                        String bName = rs.getString("BorrowerName");
+                        String phoneNumber = rs.getString("PhoneNumber");
+                        String addressBorrower = rs.getString("Address");
+                        String emailBorrower = rs.getString("Email");
+                        Object[] row = {id, bName, phoneNumber, addressBorrower, email};
                         modelBorrower.addRow(row);
                     }
-                    tbBook.setModel(modelBorrower);
+                    ListBorrower.tbBorrower.setModel(modelBorrower);
                     this.dispose();
                 }
             } catch (Exception e) {
@@ -315,9 +314,9 @@ public class EditBorrower extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLayeredPane pnBook;
-    private javax.swing.JTextArea txtAddress;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPhone;
+    protected javax.swing.JTextArea txtAddress;
+    protected javax.swing.JTextField txtEmail;
+    protected javax.swing.JTextField txtName;
+    protected javax.swing.JTextField txtPhone;
     // End of variables declaration//GEN-END:variables
 }

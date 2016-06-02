@@ -8,6 +8,7 @@ package Run;
 import GetConnect.MyConnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -228,13 +229,13 @@ public class AddBorrwer extends javax.swing.JFrame {
         String email = txtEmail.getText();
         m = p.matcher(email);
         if (name.equals("")) {
-            JOptionPane.showMessageDialog(null, "Book ID cannot be blanked");
+            JOptionPane.showMessageDialog(null, "Name cannot be blanked");
         } else if (phone.equals("")) {
-            JOptionPane.showMessageDialog(null, "Book Name cannot be blanked");
+            JOptionPane.showMessageDialog(null, "Phone number cannot be blanked");
         } else if (address.equals("")) {
-            JOptionPane.showMessageDialog(null, "Book Author cannot be blanked");
+            JOptionPane.showMessageDialog(null, "Address cannot be blanked");
         } else if (email.equals("")) {
-            JOptionPane.showMessageDialog(null, "Book Publisher cannot be blanked");
+            JOptionPane.showMessageDialog(null, "Email cannot be blanked");
         } else if(!m.matches()){
             JOptionPane.showMessageDialog(null, "Invalid email!");
         } else {
@@ -247,9 +248,13 @@ public class AddBorrwer extends javax.swing.JFrame {
                 ps.setString(4, email);
                 int result = ps.executeUpdate();
                 if(result != 0){
-                    JOptionPane.showMessageDialog(null, "Book has been added");
+                    JOptionPane.showMessageDialog(null, "Account has been added");
+                    PreparedStatement ps1 = conn.prepareStatement("select MAX(BorrowerID) as borrowerInsertID from Borrower");
+                    ResultSet rs = ps1.executeQuery();
+                    rs.next();
+                    int id = rs.getInt("borrowerInsertID");
                     DefaultTableModel model = (DefaultTableModel) ListBorrower.tbBorrower.getModel();
-                    Object[] row = {name,phone,address,email};
+                    Object[] row = {id, name,phone,address,email};
                     model.insertRow(0, row);
                     this.dispose();
                 }

@@ -10,6 +10,7 @@ import static Run.Home.tbBook;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ListBorrower extends javax.swing.JFrame {
     DefaultTableModel modelBorrower;
+    String borrowerID;
     /**
      * Creates new form ListBorrower
      */
@@ -84,14 +86,14 @@ public class ListBorrower extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Name", "Phone Number", "Address", "Email"
+                "Name", "Phone Number", "Address", "Email"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -103,6 +105,11 @@ public class ListBorrower extends javax.swing.JFrame {
             }
         });
         tbBorrower.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tbBorrower.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbBorrowerMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbBorrower);
 
         btnEdit.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -131,6 +138,15 @@ public class ListBorrower extends javax.swing.JFrame {
                 btnAddActionPerformed(evt);
             }
         });
+
+        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnEdit, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnDel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnHome, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnAdd, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -180,14 +196,6 @@ public class ListBorrower extends javax.swing.JFrame {
                     .addComponent(btnAdd))
                 .addContainerGap())
         );
-        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnEdit, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnDel, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnHome, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnAdd, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -210,8 +218,27 @@ public class ListBorrower extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        EditBook eb = new EditBook();
-        eb.setVisible(true);
+        EditBorrower eb = new EditBorrower();
+         try {
+            if (borrowerID == null) {
+                JOptionPane.showMessageDialog(null, "You must select a borower to edit");
+            } else {
+                Connection conn = MyConnect.getConnection();
+                PreparedStatement ps = conn.prepareStatement("select * from Borrower where BorrowerID = ?");
+                ps.setString(1, borrowerID);
+                ResultSet rs = ps.executeQuery();
+                if(rs.next()){
+                    eb.id = rs.getInt("BorrowerID");
+                    eb.txtName.setText(rs.getString("BorrowerName"));
+                    eb.txtPhone.setText(rs.getString("PhoneNumber"));
+                    eb.txtAddress.setText(rs.getString("Address"));
+                    eb.txtEmail.setText(rs.getString("Email"));
+                }
+                eb.setVisible(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -223,6 +250,12 @@ public class ListBorrower extends javax.swing.JFrame {
         Home home = new Home();
         home.setVisible(true);
     }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void tbBorrowerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbBorrowerMouseClicked
+        int indexBook = tbBorrower.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) tbBorrower.getModel();
+        borrowerID = model.getValueAt(indexBook, 0).toString();
+    }//GEN-LAST:event_tbBorrowerMouseClicked
 
     /**
      * @param args the command line arguments
