@@ -5,12 +5,25 @@
  */
 package Run;
 
+import GetConnect.MyConnect;
+import static Run.Home.tbBook;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author VuManh
  */
 public class EditBorrower extends javax.swing.JFrame {
-
+    private static final String email_valid = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    Pattern p = Pattern.compile(email_valid);
+    Matcher m ;
     /**
      * Creates new form EditBorrower
      */
@@ -196,10 +209,60 @@ public class EditBorrower extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-
+        String name = txtName.getText();
+        String phone = txtPhone.getText();
+        String address = txtAddress.getText();
+        String email = txtEmail.getText();
+        if (name.equals("")) {
+            JOptionPane.showMessageDialog(null, "Book ID cannot be blanked");
+        } else if (phone.equals("")) {
+            JOptionPane.showMessageDialog(null, "Book Name cannot be blanked");
+        } else if (address.equals("")) {
+            JOptionPane.showMessageDialog(null, "Book Author cannot be blanked");
+        } else if (email.equals("")) {
+            JOptionPane.showMessageDialog(null, "Book Publisher cannot be blanked");
+        } else if(!m.matches()){
+            JOptionPane.showMessageDialog(null, "Invalid email!");
+        } else {
+            try {
+                Connection conn = MyConnect.getConnection();
+                PreparedStatement ps = conn.prepareStatement("update Borrower set BorrowerName= ?, PhoneNumber= ?, [Address]= ?, Email = ? where BorrowerID = ?");
+                ps.setString(1, name);
+                ps.setString(2, phone);
+                ps.setString(3, address);
+                ps.setString(4, email);
+                int result = ps.executeUpdate();
+                if (result != 0) {
+                    DefaultTableModel modelBorrower = (DefaultTableModel) ListBorrower.tbBorrower.getModel();
+                    modelBorrower.setRowCount(0);
+                    PreparedStatement ps1 = conn.prepareStatement("select * from Borrower");
+                    ResultSet rs = ps1.executeQuery();
+                    while (rs.next()) {
+                        String id = rs.getString("BorrowerID");
+                        String bName = rs.getString("BookName");
+                        String authorName = rs.getString("AuthorName");
+                        String bPublisher = rs.getString("Publisher");
+                        String statusString;
+                        int status = rs.getInt("Status");
+                        if (status == 0) {
+                            statusString = "Available";
+                        } else {
+                            statusString = "Lended";
+                        }
+                        Object[] row = {id, bName, authorName, bPublisher, statusString};
+                        modelBorrower.addRow(row);
+                    }
+                    tbBook.setModel(modelBorrower);
+                    this.dispose();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed

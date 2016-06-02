@@ -229,7 +229,7 @@ public class AddBook extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Book Author cannot be blanked");
         } else if (publisher.equals("")) {
             JOptionPane.showMessageDialog(null, "Book Publisher cannot be blanked");
-        } if (id.length() > 7) {
+        } else if (id.length() > 7) {
             JOptionPane.showMessageDialog(null, "Book ID out of length");
         } else {
             try {

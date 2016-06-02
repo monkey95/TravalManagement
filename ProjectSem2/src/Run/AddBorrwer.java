@@ -8,6 +8,8 @@ package Run;
 import GetConnect.MyConnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,7 +18,10 @@ import javax.swing.table.DefaultTableModel;
  * @author VuManh
  */
 public class AddBorrwer extends javax.swing.JFrame {
-
+    private static final String email_valid = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    Pattern p = Pattern.compile(email_valid);
+    Matcher m ;
     /**
      * Creates new form AddBorrwer
      */
@@ -213,6 +218,7 @@ public class AddBorrwer extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
@@ -220,6 +226,7 @@ public class AddBorrwer extends javax.swing.JFrame {
         String phone = txtPhone.getText();
         String address = txtAddress.getText();
         String email = txtEmail.getText();
+        m = p.matcher(email);
         if (name.equals("")) {
             JOptionPane.showMessageDialog(null, "Book ID cannot be blanked");
         } else if (phone.equals("")) {
@@ -228,14 +235,16 @@ public class AddBorrwer extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Book Author cannot be blanked");
         } else if (email.equals("")) {
             JOptionPane.showMessageDialog(null, "Book Publisher cannot be blanked");
+        } else if(!m.matches()){
+            JOptionPane.showMessageDialog(null, "Invalid email!");
         } else {
             try {
                 Connection conn = MyConnect.getConnection();
                 PreparedStatement ps = conn.prepareStatement("insert into Borrower values(?,?,?,?)");
-                ps.setString(2, name);
-                ps.setString(3, phone);
-                ps.setString(4, address);
-                ps.setString(5, email);
+                ps.setString(1, name);
+                ps.setString(2, phone);
+                ps.setString(3, address);
+                ps.setString(4, email);
                 int result = ps.executeUpdate();
                 if(result != 0){
                     JOptionPane.showMessageDialog(null, "Book has been added");

@@ -27,14 +27,15 @@ public class ListBorrower extends javax.swing.JFrame {
         modelBorrower.setRowCount(0);
         try {
             Connection conn = MyConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("select BorrowerName,PhoneNumber,[Address],Email from Borrower");
+            PreparedStatement ps = conn.prepareStatement("select * from Borrower");
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {           
+                int id = rs.getInt("BorrowerID");
                 String name = rs.getString("BorrowerName");
                 String phone = rs.getString("PhoneNumber");
                 String address = rs.getString("Address");
                 String email = rs.getString("Email");
-                Object[] row = {name,phone,address,email};
+                Object[] row = {id,name,phone,address,email};
                 modelBorrower.addRow(row);
             }
             tbBorrower.setModel(modelBorrower);
@@ -83,14 +84,14 @@ public class ListBorrower extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Phone Number", "Address", "Email"
+                "ID", "Name", "Phone Number", "Address", "Email"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                true, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

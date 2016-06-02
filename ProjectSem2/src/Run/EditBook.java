@@ -10,6 +10,7 @@ import static Run.Home.tbBook;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -210,39 +211,51 @@ public class EditBook extends javax.swing.JFrame {
         String bookName = txtBName.getText();
         String author = txtAuthor.getText();
         String publisher = txtPublisher.getText();
-        try {
-            Connection conn = MyConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("update Book set BookName= ?, AuthorName= ?, Publisher= ? where ID = ?");
-            ps.setString(1, bookName);
-            ps.setString(2, author);
-            ps.setString(3, publisher);
-            ps.setString(4, bookID);
-            int result = ps.executeUpdate();
-            if (result != 0) {
-                DefaultTableModel modelBook = (DefaultTableModel)tbBook.getModel();
-                modelBook.setRowCount(0);
-                PreparedStatement ps1 = conn.prepareStatement("select * from Book");
-                ResultSet rs = ps1.executeQuery();
-                while (rs.next()) {
-                    String id = rs.getString("ID");
-                    String bName = rs.getString("BookName");
-                    String authorName = rs.getString("AuthorName");
-                    String bPublisher = rs.getString("Publisher");
-                    String statusString;
-                    int status = rs.getInt("Status");
-                    if (status == 0) {
-                        statusString = "Available";
-                    } else {
-                        statusString = "Lended";
+        if (bookID.equals("")) {
+            JOptionPane.showMessageDialog(null, "Book ID cannot be blanked");
+        } else if (bookName.equals("")) {
+            JOptionPane.showMessageDialog(null, "Book Name cannot be blanked");
+        } else if (author.equals("")) {
+            JOptionPane.showMessageDialog(null, "Book Author cannot be blanked");
+        } else if (publisher.equals("")) {
+            JOptionPane.showMessageDialog(null, "Book Publisher cannot be blanked");
+        } else if (bookID.length() > 7) {
+            JOptionPane.showMessageDialog(null, "Book ID out of length");
+        } else {
+            try {
+                Connection conn = MyConnect.getConnection();
+                PreparedStatement ps = conn.prepareStatement("update Book set BookName= ?, AuthorName= ?, Publisher= ? where ID = ?");
+                ps.setString(1, bookName);
+                ps.setString(2, author);
+                ps.setString(3, publisher);
+                ps.setString(4, bookID);
+                int result = ps.executeUpdate();
+                if (result != 0) {
+                    DefaultTableModel modelBook = (DefaultTableModel) tbBook.getModel();
+                    modelBook.setRowCount(0);
+                    PreparedStatement ps1 = conn.prepareStatement("select * from Book");
+                    ResultSet rs = ps1.executeQuery();
+                    while (rs.next()) {
+                        String id = rs.getString("ID");
+                        String bName = rs.getString("BookName");
+                        String authorName = rs.getString("AuthorName");
+                        String bPublisher = rs.getString("Publisher");
+                        String statusString;
+                        int status = rs.getInt("Status");
+                        if (status == 0) {
+                            statusString = "Available";
+                        } else {
+                            statusString = "Lended";
+                        }
+                        Object[] row = {id, bName, authorName, bPublisher, statusString};
+                        modelBook.addRow(row);
                     }
-                    Object[] row = {id, bName, authorName, bPublisher, statusString};
-                    modelBook.addRow(row);
+                    tbBook.setModel(modelBook);
+                    this.dispose();
                 }
-                tbBook.setModel(modelBook);
-                this.dispose();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
