@@ -9,6 +9,7 @@ import GetConnect.MyConnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,8 +17,10 @@ import javax.swing.table.DefaultTableModel;
  * @author VuManh
  */
 public class Home extends javax.swing.JFrame {
+
     DefaultTableModel modelBook;
-    
+    String bookID;
+
     /**
      * Creates new form ViewBook
      */
@@ -29,16 +32,16 @@ public class Home extends javax.swing.JFrame {
             Connection conn = MyConnect.getConnection();
             PreparedStatement ps = conn.prepareStatement("select * from Book");
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {
                 String id = rs.getString("ID");
                 String bookName = rs.getString("BookName");
                 String authorName = rs.getString("AuthorName");
                 String publisher = rs.getString("Publisher");
                 String statusString;
                 int status = rs.getInt("Status");
-                if(status == 0){
+                if (status == 0) {
                     statusString = "Available";
-                }else{
+                } else {
                     statusString = "Lended";
                 }
                 Object[] row = {id, bookName, authorName, publisher, statusString};
@@ -110,6 +113,11 @@ public class Home extends javax.swing.JFrame {
             }
         });
         tbBook.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tbBook.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbBookMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbBook);
 
         btnEdit.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -138,6 +146,15 @@ public class Home extends javax.swing.JFrame {
                 btnBorrowActionPerformed(evt);
             }
         });
+
+        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnEdit, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnDel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnAdd, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnBorrow, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -187,14 +204,6 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(btnBorrow))
                 .addContainerGap())
         );
-        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnEdit, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnDel, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnAdd, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnBorrow, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -224,13 +233,37 @@ public class Home extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         EditBook eb = new EditBook();
-        eb.setVisible(true);
+        try {
+            if (bookID == null) {
+                JOptionPane.showMessageDialog(null, "You must select a book to edit");
+            } else {
+                Connection conn = MyConnect.getConnection();
+                PreparedStatement ps = conn.prepareStatement("select * from Book where ID = ?");
+                ps.setString(1, bookID);
+                ResultSet rs = ps.executeQuery();
+                if(rs.next()){
+                    eb.txtBookID.setText(rs.getString("ID"));
+                    eb.txtBName.setText(rs.getString("BookName"));
+                    eb.txtAuthor.setText(rs.getString("AuthorName"));
+                    eb.txtPublisher.setText(rs.getString("Publisher"));
+                }
+                eb.setVisible(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnBorrowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrowActionPerformed
         BorrowBook bb = new BorrowBook();
         bb.setVisible(true);
     }//GEN-LAST:event_btnBorrowActionPerformed
+
+    private void tbBookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbBookMouseClicked
+        int indexBook = tbBook.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) tbBook.getModel();
+        bookID = model.getValueAt(indexBook, 0).toString();
+    }//GEN-LAST:event_tbBookMouseClicked
 
     /**
      * @param args the command line arguments
