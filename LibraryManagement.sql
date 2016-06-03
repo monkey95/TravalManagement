@@ -53,6 +53,7 @@ select count(*) as totalTicket from BorrowList
 
 select * from Book
 select * from Borrower
+select * from BorrowList
 select * from Account where username = 'admin'
 
 create procedure signIn(

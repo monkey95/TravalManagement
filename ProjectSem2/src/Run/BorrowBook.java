@@ -5,11 +5,21 @@
  */
 package Run;
 
+import GetConnect.MyConnect;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author VuManh
  */
 public class BorrowBook extends javax.swing.JFrame {
+
+    protected static String id, bookID;
 
     /**
      * Creates new form BorrowerBook
@@ -273,9 +283,25 @@ public class BorrowBook extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        String tickketID = txtTicket.getText();
-        ListBorrow lb = new ListBorrow();
-        lb.setVisible(true);
+        String ticketID = txtTicket.getText();
+        String borrowDate = txtBorrowDate.getText();
+        String returnDate = txtReturnDate.getText();
+        try {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Connection conn = MyConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement("insert into BorrowList values (?, ?, ?, ?, ?)");
+            ps.setString(1, ticketID);
+            ps.setString(2, id);
+            ps.setString(3, bookID);
+            ps.setDate(4, new java.sql.Date(dateFormat.parse(borrowDate).getTime()));
+            ps.setDate(5, new java.sql.Date(dateFormat.parse(returnDate).getTime()));
+            int result = ps.executeUpdate();
+            if (result != 0) {
+                this.dispose();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed

@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -21,22 +23,26 @@ import javax.swing.table.DefaultTableModel;
 public class BorrowerNameTicket extends javax.swing.JFrame {
     DefaultTableModel modelBorrower;
     CallableStatement callSt;
-    String borrowerName, borrowerPhone;
+    String borrowerName, borrowerPhone, borrowerID;
     /**
      * Creates new form BorrowerNameTicket
      */
     public BorrowerNameTicket() {
         initComponents();
+        TableColumnModel col = tbSearchBorrower.getColumnModel();
+        col.removeColumn(col.getColumn(0));
+        
         modelBorrower = (DefaultTableModel) tbSearchBorrower.getModel();
         modelBorrower.setRowCount(0);
         try {
             Connection conn = MyConnect.getConnection();
             PreparedStatement ps = conn.prepareStatement("select * from Borrower");
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {           
+            while (rs.next()) {
+                String id = rs.getString("BorrowerID");
                 String name = rs.getString("BorrowerName");
                 String phone = rs.getString("PhoneNumber");
-                Object[] row = {name,phone};
+                Object[] row = {id, name,phone};
                 modelBorrower.addRow(row);
             }
             tbSearchBorrower.setModel(modelBorrower);
@@ -81,11 +87,11 @@ public class BorrowerNameTicket extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Borrower Name", "Phone Number"
+                "ID", "Borrower Name", "Phone Number"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -106,6 +112,11 @@ public class BorrowerNameTicket extends javax.swing.JFrame {
                 btnDoneActionPerformed(evt);
             }
         });
+
+        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(txtSearchBorrower, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnDone, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -136,10 +147,6 @@ public class BorrowerNameTicket extends javax.swing.JFrame {
                 .addComponent(btnDone)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(txtSearchBorrower, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnDone, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -171,9 +178,10 @@ public class BorrowerNameTicket extends javax.swing.JFrame {
             callSt.setString(1, searchText);
             ResultSet rs = callSt.executeQuery();
             while (rs.next()) {
+                String id = rs.getString("BorrowerID");
                 String name = rs.getString("BorrowerName");
                 String phone = rs.getString("PhoneNumber");
-                Object[] row = {name, phone};
+                Object[] row = {id, name, phone};
                 modelBorrower.addRow(row);
             }
         } catch (Exception e) {
@@ -184,14 +192,16 @@ public class BorrowerNameTicket extends javax.swing.JFrame {
     private void tbSearchBorrowerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSearchBorrowerMouseClicked
         int indexBook = tbSearchBorrower.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) tbSearchBorrower.getModel();
-        borrowerName = model.getValueAt(indexBook, 0).toString();
-        borrowerPhone = model.getValueAt(indexBook, 1).toString();
+        borrowerID = model.getValueAt(indexBook, 0).toString();
+        borrowerName = model.getValueAt(indexBook, 1).toString();
+        borrowerPhone = model.getValueAt(indexBook, 2).toString();
     }//GEN-LAST:event_tbSearchBorrowerMouseClicked
 
     private void btnDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoneActionPerformed
         if(borrowerName == null || borrowerPhone == null){
             JOptionPane.showMessageDialog(null, "You must select a borrower");
         }else{
+            BorrowBook.id = borrowerID;
             BorrowBook.txtBorrowerName.setText(borrowerName);
             BorrowBook.txtPhone.setText(borrowerPhone);
             this.dispose();

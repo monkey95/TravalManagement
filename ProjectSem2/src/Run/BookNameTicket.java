@@ -22,7 +22,7 @@ public class BookNameTicket extends javax.swing.JFrame {
 
     DefaultTableModel modelBook;
     CallableStatement callSt;
-    String bookID;
+    String bookID, bookName;
 
     /**
      * Creates new form BookNameTicket
@@ -186,14 +186,16 @@ public class BookNameTicket extends javax.swing.JFrame {
     private void tbSearchBookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSearchBookMouseClicked
         int indexBook = tbSearchBook.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) tbSearchBook.getModel();
-        bookID = model.getValueAt(indexBook, 1).toString();
+        bookID = model.getValueAt(indexBook, 0).toString();
+        bookName = model.getValueAt(indexBook, 1).toString();
     }//GEN-LAST:event_tbSearchBookMouseClicked
 
     private void btnDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoneActionPerformed
         if(bookID == null){
             JOptionPane.showMessageDialog(null, "You must select a book");
         }else{
-            BorrowBook.txtBookName.setText(bookID);
+            BorrowBook.bookID = bookID;
+            BorrowBook.txtBookName.setText(bookName);
             this.dispose();
         }
     }//GEN-LAST:event_btnDoneActionPerformed
