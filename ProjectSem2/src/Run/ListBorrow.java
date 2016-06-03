@@ -6,17 +6,21 @@
 package Run;
 
 import GetConnect.MyConnect;
-import static Run.ListBorrower.tbBorrower;
 import java.sql.Connection;
+//import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import javax.swing.table.DefaultTableModel;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
  * @author VuManh
  */
 public class ListBorrow extends javax.swing.JFrame {
+
     /**
      * Creates new form AddTours
      */
@@ -41,7 +45,7 @@ public class ListBorrow extends javax.swing.JFrame {
         txtSearch = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         btnReturn = new javax.swing.JButton();
-        btnHome1 = new javax.swing.JButton();
+        btnCreateTicket = new javax.swing.JButton();
         btnShowTicket = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -98,8 +102,13 @@ public class ListBorrow extends javax.swing.JFrame {
         btnReturn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnReturn.setText("Returned Book");
 
-        btnHome1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnHome1.setText("Create borrow ticket");
+        btnCreateTicket.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnCreateTicket.setText("Create borrow ticket");
+        btnCreateTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateTicketActionPerformed(evt);
+            }
+        });
 
         btnShowTicket.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnShowTicket.setText("Show Expired Ticket");
@@ -119,7 +128,7 @@ public class ListBorrow extends javax.swing.JFrame {
                 .addGap(75, 75, 75))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(btnHome1)
+                .addComponent(btnCreateTicket)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
                 .addComponent(btnHome)
                 .addGap(188, 188, 188)
@@ -146,7 +155,7 @@ public class ListBorrow extends javax.swing.JFrame {
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnHome)
                     .addComponent(btnReturn)
-                    .addComponent(btnHome1))
+                    .addComponent(btnCreateTicket))
                 .addGap(21, 21, 21))
             .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane2Layout.createSequentialGroup()
@@ -160,7 +169,7 @@ public class ListBorrow extends javax.swing.JFrame {
         jLayeredPane2.setLayer(txtSearch, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(btnReturn, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(btnHome1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(btnCreateTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(btnShowTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -189,6 +198,35 @@ public class ListBorrow extends javax.swing.JFrame {
         home.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void btnCreateTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateTicketActionPerformed
+        try {
+            BorrowBook borrow = new BorrowBook();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date();
+            borrow.txtBorrowDate.setText(dateFormat.format(date));
+            date = addDays(date, 15);
+            borrow.txtReturnDate.setText(dateFormat.format(date));
+            
+            Connection conn = MyConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement("select count(*) as totalTicket from BorrowList");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            int total = rs.getInt("totalTicket") + 1;
+            String ticketID = "TK0" + total;
+            borrow.txtTicket.setText(ticketID);
+            borrow.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnCreateTicketActionPerformed
+
+    public Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return (Date) cal.getTime();
+    }
 
     /**
      * @param args the command line arguments
@@ -227,8 +265,8 @@ public class ListBorrow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCreateTicket;
     private javax.swing.JButton btnHome;
-    private javax.swing.JButton btnHome1;
     private javax.swing.JButton btnReturn;
     private javax.swing.JButton btnShowTicket;
     private javax.swing.JLabel jLabel1;

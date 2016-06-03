@@ -273,6 +273,7 @@ public class BorrowBook extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        String tickketID = txtTicket.getText();
         ListBorrow lb = new ListBorrow();
         lb.setVisible(true);
     }//GEN-LAST:event_btnCreateActionPerformed
@@ -341,11 +342,11 @@ public class BorrowBook extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane pnBook;
-    private javax.swing.JTextField txtBookName;
-    private javax.swing.JTextField txtBorrowDate;
-    private javax.swing.JTextField txtBorrowerName;
-    private javax.swing.JTextField txtPhone;
-    private javax.swing.JTextField txtReturnDate;
-    private javax.swing.JTextField txtTicket;
+    protected static javax.swing.JTextField txtBookName;
+    protected javax.swing.JTextField txtBorrowDate;
+    protected static javax.swing.JTextField txtBorrowerName;
+    protected static javax.swing.JTextField txtPhone;
+    protected javax.swing.JTextField txtReturnDate;
+    protected javax.swing.JTextField txtTicket;
     // End of variables declaration//GEN-END:variables
 }

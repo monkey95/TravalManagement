@@ -18,8 +18,8 @@ create table BorrowList(
 	BorrowID varchar(7) primary key,
 	BorrowerID int foreign key references Borrower(BorrowerID),
     IDBook varchar(7) foreign key references Book(ID),
-	BorrowDate datetime,
-	ReturnDate datetime
+	BorrowDate date,
+	ReturnDate date
 )
 
 create table Borrower(
@@ -43,8 +43,13 @@ insert into Book values('BK02','Day hoc tot toan 12','Mai Anh Hung','Bo giao duc
 insert into Book values('BK03','Than thoai Hy Lap','Le Ba Tran Phuong','Nha XB Tre',0)
 
 insert into Borrower values ('Chu Tien Tai', '0123456789','Gia Lam - Ha Noi','tientai@gmail.com')
+insert into Borrower values ('Dam Duy Huong', '0122123456','Hung Yen - Ha Noi','damhuong@gmail.com')
 
-insert into BorrowList values ('TK01', 1,'BK1','2016-05-02 15:00:00.000','1998-06-02 17:00:00.000')
+
+insert into BorrowList values ('TK01', 1,'BK01','2016-05-02','1998-06-02')
+insert into BorrowList values ('TK02', 2,'BK03','2016-05-22','1998-06-22')
+
+select count(*) as totalTicket from BorrowList
 
 select * from Book
 select * from Borrower
@@ -55,6 +60,20 @@ create procedure signIn(
 )as
 begin
 select * from Account where username = @username
+end
+
+create procedure searchBook(
+	@id varchar(10)
+)as 
+begin
+Select * from Book where ID like '%' +  @id + '%' or BookName like '%' +  @id + '%'
+end
+
+create procedure searchBorrower(
+	@id varchar(10)
+)as 
+begin
+Select * from Borrower where BorrowerID like '%' +  @id + '%' or BorrowerName like '%' +  @id + '%'
 end
 
 --drop table Sach
