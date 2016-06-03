@@ -243,7 +243,7 @@ public class AddBook extends javax.swing.JFrame {
                 int result = ps.executeUpdate();
                 if(result != 0){
                     JOptionPane.showMessageDialog(null, "Book has been added");
-                    DefaultTableModel model = (DefaultTableModel) Home.tbBook.getModel();
+                    DefaultTableModel model = (DefaultTableModel) ListBook.tbBook.getModel();
                     Object[] row = {id, bookName, author, publisher, "Available"};
                     model.insertRow(0, row);
                     this.dispose();

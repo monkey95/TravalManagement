@@ -15,6 +15,7 @@ create table Book(
 )
 
 create table BorrowList(
+	BorrowID varchar(7) primary key,
 	BorrowerID int foreign key references Borrower(BorrowerID),
     IDBook varchar(7) foreign key references Book(ID),
 	BorrowDate datetime,
@@ -42,6 +43,8 @@ insert into Book values('BK02','Day hoc tot toan 12','Mai Anh Hung','Bo giao duc
 insert into Book values('BK03','Than thoai Hy Lap','Le Ba Tran Phuong','Nha XB Tre',0)
 
 insert into Borrower values ('Chu Tien Tai', '0123456789','Gia Lam - Ha Noi','tientai@gmail.com')
+
+insert into BorrowList values ('TK01', 1,'BK1','2016-05-02 15:00:00.000','1998-06-02 17:00:00.000')
 
 select * from Book
 select * from Borrower
