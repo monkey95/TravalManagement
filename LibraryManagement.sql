@@ -77,6 +77,24 @@ begin
 Select * from Borrower where BorrowerID like '%' +  @id + '%' or BorrowerName like '%' +  @id + '%'
 end
 
+create procedure getBorrowList
+as
+begin
+SELECT        BorrowList.BorrowID, Book.BookName, Borrower.BorrowerName, Borrower.PhoneNumber, BorrowList.BorrowDate, BorrowList.ReturnDate
+FROM            Book INNER JOIN
+                         BorrowList ON Book.ID = BorrowList.IDBook INNER JOIN
+                         Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where ReturnDate > GETDATE()
+end
+
+create procedure getExpiredBorrowList
+as
+begin
+SELECT        BorrowList.BorrowID, Book.BookName, Borrower.BorrowerName, Borrower.PhoneNumber, BorrowList.BorrowDate, BorrowList.ReturnDate
+FROM            Book INNER JOIN
+                         BorrowList ON Book.ID = BorrowList.IDBook INNER JOIN
+                         Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where ReturnDate < GETDATE()
+end
+
 --drop table Sach
 --drop table NhaXB
 --drop table LoaiSach

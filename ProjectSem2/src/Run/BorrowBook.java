@@ -6,11 +6,13 @@
 package Run;
 
 import GetConnect.MyConnect;
+import static Run.ListBorrow.tbBorrow;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,6 +20,8 @@ import javax.swing.table.DefaultTableModel;
  * @author VuManh
  */
 public class BorrowBook extends javax.swing.JFrame {
+    DefaultTableModel modelBorrow;
+    CallableStatement callSt;
 
     protected static String id, bookID;
 
@@ -284,8 +288,12 @@ public class BorrowBook extends javax.swing.JFrame {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         String ticketID = txtTicket.getText();
+        String borrowerName = txtBorrowerName.getText();
+        String phoneNumber = txtPhone.getText();
+        String bookName = txtBookName.getText();
         String borrowDate = txtBorrowDate.getText();
         String returnDate = txtReturnDate.getText();
+        modelBorrow = (DefaultTableModel)tbBorrow.getModel();
         try {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Connection conn = MyConnect.getConnection();
@@ -297,6 +305,8 @@ public class BorrowBook extends javax.swing.JFrame {
             ps.setDate(5, new java.sql.Date(dateFormat.parse(returnDate).getTime()));
             int result = ps.executeUpdate();
             if (result != 0) {
+                Object[] row = {ticketID, borrowerName, bookName, phoneNumber, borrowDate, returnDate};
+                modelBorrow.insertRow(0, row);
                 this.dispose();
             }
         } catch (Exception e) {
