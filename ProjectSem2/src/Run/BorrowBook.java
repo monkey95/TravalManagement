@@ -298,13 +298,13 @@ public class BorrowBook extends javax.swing.JFrame {
         try {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Connection conn = MyConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("insert into BorrowList values (?, ?, ?, ?, ?)");
-            ps.setString(1, ticketID);
-            ps.setString(2, id);
-            ps.setString(3, bookID);
-            ps.setDate(4, new java.sql.Date(dateFormat.parse(borrowDate).getTime()));
-            ps.setDate(5, new java.sql.Date(dateFormat.parse(returnDate).getTime()));
-            int result = ps.executeUpdate();
+            callSt = conn.prepareCall("{call AddTicket(?, ?, ?, ?, ?)}");
+            callSt.setString(1, ticketID);
+            callSt.setString(2, id);
+            callSt.setString(3, bookID);
+            callSt.setDate(4, new java.sql.Date(dateFormat.parse(borrowDate).getTime()));
+            callSt.setDate(5, new java.sql.Date(dateFormat.parse(returnDate).getTime()));
+            int result = callSt.executeUpdate();
             if (result != 0) {
                 Object[] row = {ticketID, borrowerName, bookName, phoneNumber, borrowDate, returnDate};
                 modelBorrow.insertRow(0, row);

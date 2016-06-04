@@ -33,7 +33,7 @@ public class BookNameTicket extends javax.swing.JFrame {
         modelBook.setRowCount(0);
         try {
             Connection conn = MyConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("select ID, BookName from Book");
+            PreparedStatement ps = conn.prepareStatement("select ID, BookName from Book where [Status] = 0");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String id = rs.getString("ID");
@@ -87,7 +87,7 @@ public class BookNameTicket extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -108,6 +108,11 @@ public class BookNameTicket extends javax.swing.JFrame {
                 btnDoneActionPerformed(evt);
             }
         });
+
+        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(txtSearchBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnDone, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -138,10 +143,6 @@ public class BookNameTicket extends javax.swing.JFrame {
                 .addComponent(btnDone)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
-        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(txtSearchBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnDone, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

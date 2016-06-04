@@ -74,14 +74,14 @@ create procedure searchBook(
 	@id varchar(10)
 )as 
 begin
-Select * from Book where ID like '%' +  @id + '%' or BookName like '%' +  @id + '%' and ID='0'
+Select * from Book where [Status]=0 and (ID like '%' +  @id + '%' or BookName like '%' +  @id + '%')
 end
 
 create procedure searchBorrower(
 	@id varchar(10)
 )as 
 begin
-Select * from Borrower where BorrowerID like '%' +  @id + '%' or BorrowerName like '%' +  @id + '%' and ID='0'
+Select * from Borrower where BorrowerID like '%' +  @id + '%' or BorrowerName like '%' +  @id + '%'
 end
 
 create procedure getBorrowList
@@ -102,6 +102,19 @@ FROM            Book INNER JOIN
                          Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where ReturnDate < GETDATE() and Book.[Status] = 1
 end
 
+create procedure AddTicket(
+	@ticketID varchar(10),
+	@borrowerID varchar(10),
+	@bookID varchar(10),
+	@borrowDate date,
+	@returnDate date
+)as
+begin
+insert into BorrowList values (@ticketID, @borrowerID, @bookID, @borrowDate, @returnDate)
+update Book set [Status] = 1 where ID=@bookID
+end
+
+drop procedure AddTicket
 --drop table Sach
 --drop table NhaXB
 --drop table LoaiSach
