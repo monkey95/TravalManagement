@@ -89,15 +89,6 @@ public class EditBorrower extends javax.swing.JFrame {
 
         txtPhone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        pnBook.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtName, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtPhone, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
         javax.swing.GroupLayout pnBookLayout = new javax.swing.GroupLayout(pnBook);
         pnBook.setLayout(pnBookLayout);
         pnBookLayout.setHorizontalGroup(
@@ -138,8 +129,17 @@ public class EditBorrower extends javax.swing.JFrame {
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+        pnBook.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtPhone, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         btnUpdate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/floppy_disk_48.png"))); // NOI18N
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,6 +148,7 @@ public class EditBorrower extends javax.swing.JFrame {
         });
 
         btnCancel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/cancel_48.png"))); // NOI18N
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,11 +159,6 @@ public class EditBorrower extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 2, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 0, 255));
         jLabel1.setText("Edit Borrower");
-
-        jLayeredPane1.setLayer(pnBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnUpdate, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnCancel, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -180,7 +176,7 @@ public class EditBorrower extends javax.swing.JFrame {
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addComponent(btnUpdate)
-                        .addGap(111, 111, 111)
+                        .addGap(79, 79, 79)
                         .addComponent(btnCancel)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -197,6 +193,10 @@ public class EditBorrower extends javax.swing.JFrame {
                     .addComponent(btnCancel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+        jLayeredPane1.setLayer(pnBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnUpdate, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnCancel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
