@@ -23,6 +23,11 @@ public class EditBorrower extends javax.swing.JFrame {
 		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     Pattern p = Pattern.compile(email_valid);
     Matcher m ;
+    
+    private static final String phone_valid = "d{12}";
+    Pattern p2 = Pattern.compile(phone_valid);
+    Matcher m2;
+    
     protected int id;
     /**
      * Creates new form EditBorrower
@@ -220,6 +225,7 @@ public class EditBorrower extends javax.swing.JFrame {
         String address = txtAddress.getText();
         String email = txtEmail.getText();
         m = p.matcher(email);
+        m2 = p2.matcher(phone);
         if (name.equals("")) {
             JOptionPane.showMessageDialog(null, "Book ID cannot be blanked");
         } else if (phone.equals("")) {
@@ -230,6 +236,8 @@ public class EditBorrower extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Book Publisher cannot be blanked");
         } else if(!m.matches()){
             JOptionPane.showMessageDialog(null, "Invalid email!");
+        } else if(!m2.matches()){
+            JOptionPane.showMessageDialog(null, "Invalid phone number!");
         } else {
             try {
                 Connection conn = MyConnect.getConnection();

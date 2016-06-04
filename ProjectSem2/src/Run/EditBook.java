@@ -211,16 +211,12 @@ public class EditBook extends javax.swing.JFrame {
         String bookName = txtBName.getText();
         String author = txtAuthor.getText();
         String publisher = txtPublisher.getText();
-        if (bookID.equals("")) {
-            JOptionPane.showMessageDialog(null, "Book ID cannot be blanked");
-        } else if (bookName.equals("")) {
+        if (bookName.equals("")) {
             JOptionPane.showMessageDialog(null, "Book Name cannot be blanked");
         } else if (author.equals("")) {
             JOptionPane.showMessageDialog(null, "Book Author cannot be blanked");
         } else if (publisher.equals("")) {
             JOptionPane.showMessageDialog(null, "Book Publisher cannot be blanked");
-        } else if (bookID.length() > 7) {
-            JOptionPane.showMessageDialog(null, "Book ID out of length");
         } else {
             try {
                 Connection conn = MyConnect.getConnection();
