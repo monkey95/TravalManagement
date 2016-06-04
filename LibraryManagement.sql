@@ -38,9 +38,16 @@ inner join TacGia on Sach.MaTG = TacGia.MaTG
 
 insert into Account values ('admin', '123456')
 
-insert into Book values('BK01','Tieng Viet lop 1','Nguyen Trai','Kim Dong',0)
+insert into Book values('BK01','Tieng Viet lop 1','Nguyen Trai','Kim Dong',1)
 insert into Book values('BK02','Day hoc tot toan 12','Mai Anh Hung','Bo giao duc va dao tao',0)
-insert into Book values('BK03','Than thoai Hy Lap','Le Ba Tran Phuong','Nha XB Tre',0)
+insert into Book values('BK03','Tu hoc Excel','Le Ba Tran Phuong','Nha XB Tre',1)
+insert into Book values('BK04','Tu hoc PowerPoint','Le Ba Tran Phuong','Nha XB Tre',0)
+insert into Book values('BK05','Tu hoc Word','Le Ba Tran Phuong','Nha XB Tre',0)
+insert into Book values('BK06','Tu hoc Android','Le Ba Tran Phuong','Nha XB Tre',0)
+insert into Book values('BK07','Tieng Anh lop 9','Le Ba Tran Phuong','Nha XB Tre',0)
+insert into Book values('BK08','Van hoc Viet Nam','Le Ba Tran Phuong','Nha XB Tre',0)
+insert into Book values('BK09','Sach day nau an','Le Ba Tran Phuong','Nha XB Tre',0)
+insert into Book values('BK010','Tu sua chua may tinh','Le Ba Tran Phuong','Nha XB Tre',0)
 
 insert into Borrower values ('Chu Tien Tai', '0123456789','Gia Lam - Ha Noi','tientai@gmail.com')
 insert into Borrower values ('Dam Duy Huong', '0122123456','Hung Yen - Ha Noi','damhuong@gmail.com')
@@ -67,14 +74,14 @@ create procedure searchBook(
 	@id varchar(10)
 )as 
 begin
-Select * from Book where ID like '%' +  @id + '%' or BookName like '%' +  @id + '%'
+Select * from Book where ID like '%' +  @id + '%' or BookName like '%' +  @id + '%' and ID='0'
 end
 
 create procedure searchBorrower(
 	@id varchar(10)
 )as 
 begin
-Select * from Borrower where BorrowerID like '%' +  @id + '%' or BorrowerName like '%' +  @id + '%'
+Select * from Borrower where BorrowerID like '%' +  @id + '%' or BorrowerName like '%' +  @id + '%' and ID='0'
 end
 
 create procedure getBorrowList
@@ -83,7 +90,7 @@ begin
 SELECT        BorrowList.BorrowID, Book.BookName, Borrower.BorrowerName, Borrower.PhoneNumber, BorrowList.BorrowDate, BorrowList.ReturnDate
 FROM            Book INNER JOIN
                          BorrowList ON Book.ID = BorrowList.IDBook INNER JOIN
-                         Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where ReturnDate > GETDATE()
+                         Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where ReturnDate > GETDATE() and Book.[Status] = 1
 end
 
 create procedure getExpiredBorrowList
@@ -92,7 +99,7 @@ begin
 SELECT        BorrowList.BorrowID, Book.BookName, Borrower.BorrowerName, Borrower.PhoneNumber, BorrowList.BorrowDate, BorrowList.ReturnDate
 FROM            Book INNER JOIN
                          BorrowList ON Book.ID = BorrowList.IDBook INNER JOIN
-                         Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where ReturnDate < GETDATE()
+                         Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where ReturnDate < GETDATE() and Book.[Status] = 1
 end
 
 --drop table Sach
