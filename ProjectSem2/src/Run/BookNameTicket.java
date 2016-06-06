@@ -69,7 +69,7 @@ public class BookNameTicket extends javax.swing.JFrame {
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.gray));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/search_48.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/search.png"))); // NOI18N
         jLabel1.setText("Search Book");
 
         txtSearchBook.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -103,6 +103,7 @@ public class BookNameTicket extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbSearchBook);
 
         btnDone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnDone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/done.png"))); // NOI18N
         btnDone.setText("Done");
         btnDone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,7 +138,7 @@ public class BookNameTicket extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnDone)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(txtSearchBook, javax.swing.JLayeredPane.DEFAULT_LAYER);

@@ -73,7 +73,7 @@ public class BorrowerNameTicket extends javax.swing.JFrame {
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.gray));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/search_48.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/search.png"))); // NOI18N
         jLabel1.setText("Search Borrower");
 
         txtSearchBorrower.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -107,6 +107,7 @@ public class BorrowerNameTicket extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbSearchBorrower);
 
         btnDone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnDone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/done.png"))); // NOI18N
         btnDone.setText("Done");
         btnDone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

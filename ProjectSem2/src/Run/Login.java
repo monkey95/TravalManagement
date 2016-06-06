@@ -64,7 +64,7 @@ public class Login extends javax.swing.JFrame {
         password.setText("Password :");
 
         btnLogin.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Login-icon.png"))); // NOI18N
+        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/login.png"))); // NOI18N
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
