@@ -49,18 +49,18 @@ public class Login extends javax.swing.JFrame {
         jPanel2.setOpaque(false);
 
         lbLogin.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
-        lbLogin.setForeground(new java.awt.Color(204, 204, 255));
+        lbLogin.setForeground(new java.awt.Color(255, 255, 255));
         lbLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbLogin.setText("Library Management");
         lbLogin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         username.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        username.setForeground(new java.awt.Color(204, 204, 204));
+        username.setForeground(new java.awt.Color(255, 255, 255));
         username.setText("Username :");
         username.setToolTipText("");
 
         password.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        password.setForeground(new java.awt.Color(204, 204, 204));
+        password.setForeground(new java.awt.Color(255, 255, 255));
         password.setText("Password :");
 
         btnLogin.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -125,6 +125,7 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(jLabel2, gridBagConstraints);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed

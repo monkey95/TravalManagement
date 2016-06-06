@@ -14,14 +14,6 @@ create table Book(
 	[Status] int
 )
 
-create table BorrowList(
-	BorrowID varchar(7) primary key,
-	BorrowerID int foreign key references Borrower(BorrowerID),
-    IDBook varchar(7) foreign key references Book(ID),
-	BorrowDate date,
-	ReturnDate date
-)
-
 create table Borrower(
 	BorrowerID int identity primary key,
 	BorrowerName varchar(50),
@@ -30,11 +22,14 @@ create table Borrower(
 	Email varchar(100)
 )
 
-select TenSach, Tomtat, TenLoai, TenNXB, Tentacgia 
-from Sach 
-inner join LoaiSach on Sach.MaLoai = LoaiSach.MaLoai
-inner join NhaXB on Sach.MaNXB = NhaXB.MaNXB
-inner join TacGia on Sach.MaTG = TacGia.MaTG
+create table BorrowList(
+	BorrowID varchar(7) primary key,
+	BorrowerID int foreign key references Borrower(BorrowerID),
+    IDBook varchar(7) foreign key references Book(ID),
+	BorrowDate date,
+	ReturnDate date,
+	ticketStatus int
+)
 
 insert into Account values ('admin', '123456')
 
@@ -52,9 +47,8 @@ insert into Book values('BK010','Tu sua chua may tinh','Le Ba Tran Phuong','Nha 
 insert into Borrower values ('Chu Tien Tai', '0123456789','Gia Lam - Ha Noi','tientai@gmail.com')
 insert into Borrower values ('Dam Duy Huong', '0122123456','Hung Yen - Ha Noi','damhuong@gmail.com')
 
-
-insert into BorrowList values ('TK01', 1,'BK01','2016-05-02','1998-06-02')
-insert into BorrowList values ('TK02', 2,'BK03','2016-05-22','1998-06-22')
+insert into BorrowList values ('TK01', 1,'BK01','2016-05-02','1998-06-02',1)
+insert into BorrowList values ('TK02', 2,'BK03','2016-05-22','1998-06-22',1)
 
 select count(*) as totalTicket from BorrowList
 
@@ -90,7 +84,7 @@ begin
 SELECT        BorrowList.BorrowID, Book.BookName, Borrower.BorrowerName, Borrower.PhoneNumber, BorrowList.BorrowDate, BorrowList.ReturnDate
 FROM            Book INNER JOIN
                          BorrowList ON Book.ID = BorrowList.IDBook INNER JOIN
-                         Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where ReturnDate > GETDATE() and Book.[Status] = 1
+                         Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where ReturnDate > GETDATE() and ticketStatus = 1
 end
 
 create procedure getExpiredBorrowList
@@ -99,7 +93,7 @@ begin
 SELECT        BorrowList.BorrowID, Book.BookName, Borrower.BorrowerName, Borrower.PhoneNumber, BorrowList.BorrowDate, BorrowList.ReturnDate
 FROM            Book INNER JOIN
                          BorrowList ON Book.ID = BorrowList.IDBook INNER JOIN
-                         Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where ReturnDate < GETDATE() and Book.[Status] = 1
+                         Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where ReturnDate < GETDATE() and ticketStatus = 1
 end
 
 create procedure AddTicket(
@@ -110,12 +104,9 @@ create procedure AddTicket(
 	@returnDate date
 )as
 begin
-insert into BorrowList values (@ticketID, @borrowerID, @bookID, @borrowDate, @returnDate)
+insert into BorrowList values (@ticketID, @borrowerID, @bookID, @borrowDate, @returnDate,1)
 update Book set [Status] = 1 where ID=@bookID
 end
 
 drop procedure AddTicket
---drop table Sach
---drop table NhaXB
---drop table LoaiSach
---drop table TacGia
+

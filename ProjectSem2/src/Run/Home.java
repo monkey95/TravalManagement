@@ -122,6 +122,7 @@ public class Home extends javax.swing.JFrame {
         getContentPane().add(jLabel1, gridBagConstraints);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookActionPerformed
