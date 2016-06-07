@@ -49,7 +49,7 @@ public class ListBorrow extends javax.swing.JFrame {
         tbBorrow = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         btnHome = new javax.swing.JButton();
-        txtSearch = new javax.swing.JTextField();
+        txtSearchTicket = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         btnReturn = new javax.swing.JButton();
         btnCreateTicket = new javax.swing.JButton();
@@ -102,7 +102,12 @@ public class ListBorrow extends javax.swing.JFrame {
             }
         });
 
-        txtSearch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtSearchTicket.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtSearchTicket.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchTicketKeyReleased(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/search.png"))); // NOI18N
@@ -141,7 +146,7 @@ public class ListBorrow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSearchTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(76, 76, 76))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
@@ -163,7 +168,7 @@ public class ListBorrow extends javax.swing.JFrame {
                 .addContainerGap(63, Short.MAX_VALUE)
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSearchTicket, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3))
                     .addComponent(btnShowTicket))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -183,7 +188,7 @@ public class ListBorrow extends javax.swing.JFrame {
         jLayeredPane2.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(btnHome, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(txtSearch, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(txtSearchTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(btnReturn, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(btnCreateTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -285,6 +290,29 @@ public class ListBorrow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnShowTicketActionPerformed
 
+    private void txtSearchTicketKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchTicketKeyReleased
+        String txtSearch = txtSearchTicket.getText();
+        try {
+            modelBorrow.setRowCount(0);
+            Connection conn = MyConnect.getConnection();
+            callSt = conn.prepareCall("{call searchBorrowTicket(?)}");
+            callSt.setString(1, txtSearch);
+            ResultSet rs = callSt.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("BorrowID");
+                String borrowerName = rs.getString("BorrowerName");
+                String bookName = rs.getString("BookName");
+                String phone = rs.getString("PhoneNumber");
+                String borrowDate = rs.getString("BorrowDate");
+                String returnDate = rs.getString("ReturnDate");
+                Object[] row = {id, borrowerName, bookName, phone, borrowDate, returnDate};
+                modelBorrow.addRow(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_txtSearchTicketKeyReleased
+
     public Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -338,6 +366,6 @@ public class ListBorrow extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JScrollPane jScrollPane1;
     protected static javax.swing.JTable tbBorrow;
-    private javax.swing.JTextField txtSearch;
+    private javax.swing.JTextField txtSearchTicket;
     // End of variables declaration//GEN-END:variables
 }

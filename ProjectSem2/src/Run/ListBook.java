@@ -6,6 +6,7 @@
 package Run;
 
 import GetConnect.MyConnect;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,38 +18,17 @@ import javax.swing.table.DefaultTableModel;
  * @author VuManh
  */
 public class ListBook extends javax.swing.JFrame {
+
     DefaultTableModel modelBook;
     String bookID;
+
     /**
      * Creates new form ListBook
      */
     public ListBook() {
         initComponents();
         modelBook = (DefaultTableModel) tbBook.getModel();
-        modelBook.setRowCount(0);
-        try {
-            Connection conn = MyConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("select * from Book");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                String id = rs.getString("ID");
-                String bookName = rs.getString("BookName");
-                String authorName = rs.getString("AuthorName");
-                String publisher = rs.getString("Publisher");
-                String statusString;
-                int status = rs.getInt("Status");
-                if (status == 0) {
-                    statusString = "Available";
-                } else {
-                    statusString = "Lended";
-                }
-                Object[] row = {id, bookName, authorName, publisher, statusString};
-                modelBook.addRow(row);
-            }
-            tbBook.setModel(modelBook);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        loadData();
     }
 
     /**
@@ -63,7 +43,7 @@ public class ListBook extends javax.swing.JFrame {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtSearchBook = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbBook = new javax.swing.JTable();
         btnEdit = new javax.swing.JButton();
@@ -85,7 +65,12 @@ public class ListBook extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/search.png"))); // NOI18N
         jLabel3.setText("Search By Name");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtSearchBook.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtSearchBook.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchBookKeyReleased(evt);
+            }
+        });
 
         tbBook.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tbBook.setModel(new javax.swing.table.DefaultTableModel(
@@ -147,7 +132,7 @@ public class ListBook extends javax.swing.JFrame {
         });
 
         btnHome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/home_24.png"))); // NOI18N
+        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/home.png"))); // NOI18N
         btnHome.setText("Home");
         btnHome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,7 +153,7 @@ public class ListBook extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSearchBook, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(63, 63, 63))
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
                         .addComponent(btnEdit)
@@ -192,7 +177,7 @@ public class ListBook extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtSearchBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -205,7 +190,7 @@ public class ListBook extends javax.swing.JFrame {
         );
         jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(txtSearchBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btnEdit, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btnDel, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -249,7 +234,7 @@ public class ListBook extends javax.swing.JFrame {
                 PreparedStatement ps = conn.prepareStatement("select * from Book where ID = ?");
                 ps.setString(1, bookID);
                 ResultSet rs = ps.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     eb.txtBookID.setText(rs.getString("ID"));
                     eb.txtBName.setText(rs.getString("BookName"));
                     eb.txtAuthor.setText(rs.getString("AuthorName"));
@@ -263,8 +248,19 @@ public class ListBook extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        AddBook addBook = new AddBook();
-        addBook.setVisible(true);
+        try {
+            AddBook addBook = new AddBook();
+            Connection conn = MyConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement("select count(*) as totalBook from Book");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            int total = rs.getInt("totalBook") + 1;
+            String ID = "BK0" + total;
+            addBook.txtBookID.setText(ID);
+            addBook.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
@@ -273,9 +269,80 @@ public class ListBook extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
 
+    public void loadData() {
+        modelBook.setRowCount(0);
+        try {
+            Connection conn = MyConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement("select * from Book where [Status] = 0 or [Status] = 1");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("ID");
+                String bookName = rs.getString("BookName");
+                String authorName = rs.getString("AuthorName");
+                String publisher = rs.getString("Publisher");
+                String statusString;
+                int status = rs.getInt("Status");
+                if (status == 0) {
+                    statusString = "Available";
+                } else {
+                    statusString = "Lended";
+                }
+                Object[] row = {id, bookName, authorName, publisher, statusString};
+                modelBook.addRow(row);
+            }
+            tbBook.setModel(modelBook);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
-        // TODO add your handling code here:
+        try {
+            if (bookID == null) {
+                JOptionPane.showMessageDialog(null, "You must select a book to delete");
+            } else {
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete ?", "Warning", dialogButton);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    Connection conn = MyConnect.getConnection();
+                    PreparedStatement ps = conn.prepareStatement("update Book set [Status] = 2 where ID = ?");
+                    ps.setString(1, bookID);
+                    ps.executeUpdate();
+                    loadData();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnDelActionPerformed
+
+    private void txtSearchBookKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchBookKeyReleased
+        String searchText = txtSearchBook.getText();
+        modelBook.setRowCount(0);
+        try {
+            Connection cn = MyConnect.getConnection();
+            CallableStatement callSt = cn.prepareCall("{call searchBook(?)}");
+            callSt.setString(1, searchText);
+            ResultSet rs = callSt.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("ID");
+                String bookName = rs.getString("BookName");
+                String authorName = rs.getString("AuthorName");
+                String publisher = rs.getString("Publisher");
+                String statusString;
+                int status = rs.getInt("Status");
+                if (status == 0) {
+                    statusString = "Available";
+                } else {
+                    statusString = "Lended";
+                }
+                Object[] row = {id, bookName, authorName, publisher, statusString};
+                modelBook.addRow(row);
+            }
+            tbBook.setModel(modelBook);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_txtSearchBookKeyReleased
 
     /**
      * @param args the command line arguments
@@ -321,7 +388,7 @@ public class ListBook extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     protected static javax.swing.JTable tbBook;
+    private javax.swing.JTextField txtSearchBook;
     // End of variables declaration//GEN-END:variables
 }

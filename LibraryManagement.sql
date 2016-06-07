@@ -57,6 +57,18 @@ select * from Borrower
 select * from BorrowList
 select * from Account where username = 'admin'
 
+select * from BorrowList where BorrowID like '%' + k +'%'
+
+create procedure searchBorrowTicket(
+	@id varchar(10)
+)as 
+begin
+SELECT        BorrowList.BorrowID, Book.BookName, Borrower.BorrowerName, Borrower.PhoneNumber, BorrowList.BorrowDate, BorrowList.ReturnDate
+FROM            Book INNER JOIN
+                         BorrowList ON Book.ID = BorrowList.IDBook INNER JOIN
+                         Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where ticketStatus = 1 and BorrowID like '%' + @id +'%'
+end
+
 create procedure signIn(
 	@username varchar(100)
 )as

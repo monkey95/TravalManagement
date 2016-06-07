@@ -68,6 +68,7 @@ public class AddBook extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Publisher Name");
 
+        txtBookID.setEditable(false);
         txtBookID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txtBName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -317,7 +318,7 @@ public class AddBook extends javax.swing.JFrame {
     private javax.swing.JLayeredPane pnBook;
     private javax.swing.JTextField txtAuthor;
     private javax.swing.JTextField txtBName;
-    private javax.swing.JTextField txtBookID;
+    protected javax.swing.JTextField txtBookID;
     private javax.swing.JTextField txtPublisher;
     // End of variables declaration//GEN-END:variables
 }

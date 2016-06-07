@@ -24,7 +24,7 @@ public class AddBorrwer extends javax.swing.JFrame {
     Pattern p = Pattern.compile(email_valid);
     Matcher m ;
     
-    private static final String phone_valid = "d{12}";
+    private static final String phone_valid = "0([0-9]{9,11})";
     Pattern p2 = Pattern.compile(phone_valid);
     Matcher m2;
     /**
