@@ -57,7 +57,14 @@ select * from Borrower
 select * from BorrowList
 select * from Account where username = 'admin'
 
-select * from BorrowList where BorrowID like '%' + k +'%'
+create procedure returnBook(
+	@ticketID varchar(10),
+	@bookID varchar(10)
+)as
+begin
+update BorrowList set ticketStatus = 0 where BorrowID = @ticketID
+update Book set [Status] = 0 where ID = @bookID
+end
 
 create procedure searchBorrowTicket(
 	@id varchar(10)
@@ -93,7 +100,7 @@ end
 create procedure getBorrowList
 as
 begin
-SELECT        BorrowList.BorrowID, Book.BookName, Borrower.BorrowerName, Borrower.PhoneNumber, BorrowList.BorrowDate, BorrowList.ReturnDate
+SELECT        BorrowList.BorrowID, Book.ID, Book.BookName, Borrower.BorrowerName, Borrower.PhoneNumber, BorrowList.BorrowDate, BorrowList.ReturnDate
 FROM            Book INNER JOIN
                          BorrowList ON Book.ID = BorrowList.IDBook INNER JOIN
                          Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where ReturnDate > GETDATE() and ticketStatus = 1
@@ -102,7 +109,7 @@ end
 create procedure getExpiredBorrowList
 as
 begin
-SELECT        BorrowList.BorrowID, Book.BookName, Borrower.BorrowerName, Borrower.PhoneNumber, BorrowList.BorrowDate, BorrowList.ReturnDate
+SELECT        BorrowList.BorrowID, Book.ID, Book.BookName, Borrower.BorrowerName, Borrower.PhoneNumber, BorrowList.BorrowDate, BorrowList.ReturnDate
 FROM            Book INNER JOIN
                          BorrowList ON Book.ID = BorrowList.IDBook INNER JOIN
                          Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where ReturnDate < GETDATE() and ticketStatus = 1
