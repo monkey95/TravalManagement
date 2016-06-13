@@ -9,9 +9,27 @@ create table Account(
 create table Book(
 	ID varchar(7) primary key,
 	BookName varchar(50),
-	AuthorName varchar(50),
-	Publisher varchar(100),
+	authorID varchar(7) foreign key references Author(authorID),
+	publisherID varchar(7) foreign key references Publisher(publisherID),
 	[Status] int
+)
+
+create table Author(
+	authorID varchar(7) primary key,
+	authorName varchar(50),
+	authorPhone varchar(12),
+	authorAddress varchar(500),
+	authorEmail varchar(100),
+	authorStatus int
+)
+
+create table Publisher(
+	publisherID varchar(7) primary key,
+	publisherName varchar(50),
+	publisherPhone varchar(12),
+	publisherAddress varchar(500),
+	publisherEmail varchar(100),
+	publisherStatus int
 )
 
 create table Borrower(
@@ -33,16 +51,23 @@ create table BorrowList(
 
 insert into Account values ('admin', '123456')
 
-insert into Book values('BK01','Tieng Viet lop 1','Nguyen Trai','Kim Dong',1)
-insert into Book values('BK02','Day hoc tot toan 12','Mai Anh Hung','Bo giao duc va dao tao',0)
-insert into Book values('BK03','Tu hoc Excel','Le Ba Tran Phuong','Nha XB Tre',1)
-insert into Book values('BK04','Tu hoc PowerPoint','Le Ba Tran Phuong','Nha XB Tre',0)
-insert into Book values('BK05','Tu hoc Word','Le Ba Tran Phuong','Nha XB Tre',0)
-insert into Book values('BK06','Tu hoc Android','Le Ba Tran Phuong','Nha XB Tre',0)
-insert into Book values('BK07','Tieng Anh lop 9','Le Ba Tran Phuong','Nha XB Tre',0)
-insert into Book values('BK08','Van hoc Viet Nam','Le Ba Tran Phuong','Nha XB Tre',0)
-insert into Book values('BK09','Sach day nau an','Le Ba Tran Phuong','Nha XB Tre',0)
-insert into Book values('BK010','Tu sua chua may tinh','Le Ba Tran Phuong','Nha XB Tre',0)
+insert into Book values('BK01','Tieng Viet lop 1','AT03','PB02',1)
+insert into Book values('BK02','Day hoc tot toan 12','AT02','PB02',0)
+insert into Book values('BK03','Tu hoc Excel','AT01','PB01',1)
+insert into Book values('BK04','Tu hoc PowerPoint','AT01','PB01',0)
+insert into Book values('BK05','Tu hoc Word','AT01','PB01',0)
+insert into Book values('BK06','Tu hoc Android','AT01','PB01',0)
+insert into Book values('BK07','Tieng Anh lop 9','AT03','PB01',0)
+insert into Book values('BK08','Van hoc Viet Nam','AT01','PB01',0)
+insert into Book values('BK09','Sach day nau an','AT01','PB01',0)
+insert into Book values('BK010','Tu sua chua may tinh','AT01','PB02',0)
+
+insert into Author values('AT01','Le Ba Tran Phuong','0123475698','Ha Noi','teacher@hocmai.vn',0)
+insert into Author values('AT02','Ha Anh Minh','0166389189','TP. Ho Chi Minh','anhminh@gmail.com',0)
+insert into Author values('AT03','Mai Anh Hung','0976189165','Ha Noi','maianhhung@gmail.com',0)
+
+insert into Publisher values('PB01','NXB Tre','0438443360','Ha Noi','nxbtre@gmail.com',0)
+insert into Publisher values('PB02','NXB Kim Dong','0437612955','Ha Noi','nxbkimdong@gmail.com',0)
 
 insert into Borrower values ('Chu Tien Tai', '0123456789','Gia Lam - Ha Noi','tientai@gmail.com')
 insert into Borrower values ('Dam Duy Huong', '0122123456','Hung Yen - Ha Noi','damhuong@gmail.com')
@@ -55,6 +80,8 @@ select count(*) as totalTicket from BorrowList
 select * from Book
 select * from Borrower
 select * from BorrowList
+select * from Author
+select * from Publisher
 select * from Account where username = 'admin'
 
 select * from BorrowList where BorrowID like '%' + k +'%'
