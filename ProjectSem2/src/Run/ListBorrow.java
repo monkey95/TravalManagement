@@ -15,7 +15,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -25,12 +27,16 @@ public class ListBorrow extends javax.swing.JFrame {
 
     DefaultTableModel modelBorrow;
     CallableStatement callSt;
+    String ticketID, bookID;
 
     /**
      * Creates new form AddTours
      */
     public ListBorrow() {
         initComponents();
+        TableColumnModel col = tbBorrow.getColumnModel();
+        col.removeColumn(col.getColumn(1));
+
         modelBorrow = (DefaultTableModel) tbBorrow.getModel();
         getBorrowList();
     }
@@ -66,14 +72,14 @@ public class ListBorrow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Ticket ID", "Borrower Name", "Book Name", "Borrower Phone", "Borrow Date", "Return Date"
+                "Ticket ID", "Book ID", "Borrower Name", "Book Name", "Borrower Phone", "Borrow Date", "Return Date"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -87,6 +93,11 @@ public class ListBorrow extends javax.swing.JFrame {
         tbBorrow.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tbBorrow.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tbBorrow.setSurrendersFocusOnKeystroke(true);
+        tbBorrow.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbBorrowMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbBorrow);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 2, 36)); // NOI18N
@@ -115,7 +126,12 @@ public class ListBorrow extends javax.swing.JFrame {
 
         btnReturn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/return.png"))); // NOI18N
-        btnReturn.setText("Returned Book");
+        btnReturn.setText("Return Book");
+        btnReturn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReturnActionPerformed(evt);
+            }
+        });
 
         btnCreateTicket.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCreateTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/addTicket.png"))); // NOI18N
@@ -134,6 +150,15 @@ public class ListBorrow extends javax.swing.JFrame {
                 btnShowTicketActionPerformed(evt);
             }
         });
+
+        jLayeredPane2.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(btnHome, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(txtSearchTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(btnReturn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(btnCreateTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(btnShowTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
@@ -185,14 +210,6 @@ public class ListBorrow extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addContainerGap(454, Short.MAX_VALUE)))
         );
-        jLayeredPane2.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(btnHome, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(txtSearchTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(btnReturn, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(btnCreateTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(btnShowTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -250,12 +267,13 @@ public class ListBorrow extends javax.swing.JFrame {
             ResultSet rs = callSt.executeQuery();
             while (rs.next()) {
                 String id = rs.getString("BorrowID");
+                String bookID = rs.getString("ID");
                 String borrowerName = rs.getString("BorrowerName");
                 String bookName = rs.getString("BookName");
                 String phone = rs.getString("PhoneNumber");
                 String borrowDate = rs.getString("BorrowDate");
                 String returnDate = rs.getString("ReturnDate");
-                Object[] row = {id, borrowerName, bookName, phone, borrowDate, returnDate};
+                Object[] row = {id, bookID, borrowerName, bookName, phone, borrowDate, returnDate};
                 modelBorrow.addRow(row);
             }
         } catch (Exception e) {
@@ -272,12 +290,13 @@ public class ListBorrow extends javax.swing.JFrame {
                 ResultSet rs = callSt.executeQuery();
                 while (rs.next()) {
                     String id = rs.getString("BorrowID");
+                    String bookID = rs.getString("ID");
                     String borrowerName = rs.getString("BorrowerName");
                     String bookName = rs.getString("BookName");
                     String phone = rs.getString("PhoneNumber");
                     String borrowDate = rs.getString("BorrowDate");
                     String returnDate = rs.getString("ReturnDate");
-                    Object[] row = {id, borrowerName, bookName, phone, borrowDate, returnDate};
+                    Object[] row = {id, bookID, borrowerName, bookName, phone, borrowDate, returnDate};
                     modelBorrow.addRow(row);
                 }
             } catch (Exception e) {
@@ -290,6 +309,32 @@ public class ListBorrow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnShowTicketActionPerformed
 
+    public void showTicket() {
+        if (btnShowTicket.getText().equals("Show Unexpired Ticket")) {
+            modelBorrow.setRowCount(0);
+            try {
+                Connection conn = MyConnect.getConnection();
+                callSt = conn.prepareCall("{call getExpiredBorrowList()}");
+                ResultSet rs = callSt.executeQuery();
+                while (rs.next()) {
+                    String id = rs.getString("BorrowID");
+                    String bookID = rs.getString("ID");
+                    String borrowerName = rs.getString("BorrowerName");
+                    String bookName = rs.getString("BookName");
+                    String phone = rs.getString("PhoneNumber");
+                    String borrowDate = rs.getString("BorrowDate");
+                    String returnDate = rs.getString("ReturnDate");
+                    Object[] row = {id, bookID, borrowerName, bookName, phone, borrowDate, returnDate};
+                    modelBorrow.addRow(row);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            modelBorrow.setRowCount(0);
+            getBorrowList();
+        }
+    }
     private void txtSearchTicketKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchTicketKeyReleased
         String txtSearch = txtSearchTicket.getText();
         try {
@@ -312,6 +357,30 @@ public class ListBorrow extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_txtSearchTicketKeyReleased
+
+    private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
+        try {
+            if (ticketID == null) {
+                JOptionPane.showMessageDialog(null, "You must select a ticket to return");
+            } else {
+                Connection conn = MyConnect.getConnection();
+                callSt = conn.prepareCall("{call returnBook(?,?)}");
+                callSt.setString(1, ticketID);
+                callSt.setString(2, bookID);
+                callSt.executeUpdate();
+                showTicket();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnReturnActionPerformed
+
+    private void tbBorrowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbBorrowMouseClicked
+        int indexBook = tbBorrow.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) tbBorrow.getModel();
+        ticketID = model.getValueAt(indexBook, 0).toString();
+        bookID = model.getValueAt(indexBook, 1).toString();
+    }//GEN-LAST:event_tbBorrowMouseClicked
 
     public Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
