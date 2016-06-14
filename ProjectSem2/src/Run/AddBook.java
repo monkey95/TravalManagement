@@ -43,6 +43,8 @@ public class AddBook extends javax.swing.JFrame {
         txtBName = new javax.swing.JTextField();
         txtAuthor = new javax.swing.JTextField();
         txtPublisher = new javax.swing.JTextField();
+        btnAuthor = new javax.swing.JButton();
+        btnPublisher = new javax.swing.JButton();
         btnCreate = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
@@ -73,9 +75,27 @@ public class AddBook extends javax.swing.JFrame {
 
         txtBName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        txtAuthor.setEditable(false);
         txtAuthor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        txtPublisher.setEditable(false);
         txtPublisher.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        btnAuthor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnAuthor.setText("+");
+        btnAuthor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAuthorActionPerformed(evt);
+            }
+        });
+
+        btnPublisher.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnPublisher.setText("+");
+        btnPublisher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPublisherActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnBookLayout = new javax.swing.GroupLayout(pnBook);
         pnBook.setLayout(pnBookLayout);
@@ -92,9 +112,15 @@ public class AddBook extends javax.swing.JFrame {
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtBName, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBookID, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnBookLayout.createSequentialGroup()
+                        .addComponent(txtPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPublisher))
+                    .addGroup(pnBookLayout.createSequentialGroup()
+                        .addComponent(txtAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAuthor)))
+                .addGap(0, 10, Short.MAX_VALUE))
         );
         pnBookLayout.setVerticalGroup(
             pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,11 +136,13 @@ public class AddBook extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAuthor))
                 .addGap(18, 18, 18)
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(txtPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPublisher))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         pnBook.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -125,6 +153,8 @@ public class AddBook extends javax.swing.JFrame {
         pnBook.setLayer(txtBName, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnBook.setLayer(txtAuthor, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnBook.setLayer(txtPublisher, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(btnAuthor, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(btnPublisher, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         btnCreate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/create.png"))); // NOI18N
@@ -168,15 +198,15 @@ public class AddBook extends javax.swing.JFrame {
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addComponent(btnCreate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnReset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCancel)))
+                        .addComponent(btnCancel))
+                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(pnBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jLayeredPane1Layout.setVerticalGroup(
@@ -184,7 +214,7 @@ public class AddBook extends javax.swing.JFrame {
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(pnBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -205,7 +235,7 @@ public class AddBook extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -269,6 +299,16 @@ public class AddBook extends javax.swing.JFrame {
         txtPublisher.setText("");
     }//GEN-LAST:event_btnResetActionPerformed
 
+    private void btnAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuthorActionPerformed
+        AuthorName an = new AuthorName();
+        an.setVisible(true);
+    }//GEN-LAST:event_btnAuthorActionPerformed
+
+    private void btnPublisherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPublisherActionPerformed
+        PublisherName pn = new PublisherName();
+        pn.setVisible(true);
+    }//GEN-LAST:event_btnPublisherActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -306,8 +346,10 @@ public class AddBook extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAuthor;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnPublisher;
     private javax.swing.JButton btnReset;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -57,7 +57,6 @@ public class BorrowBook extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtReturnDate = new javax.swing.JTextField();
         btnBorrower = new javax.swing.JButton();
-        btnBook = new javax.swing.JButton();
         btnCreate = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -115,14 +114,6 @@ public class BorrowBook extends javax.swing.JFrame {
             }
         });
 
-        btnBook.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnBook.setText("+");
-        btnBook.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBookActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnBookLayout = new javax.swing.GroupLayout(pnBook);
         pnBook.setLayout(pnBookLayout);
         pnBookLayout.setHorizontalGroup(
@@ -158,9 +149,7 @@ public class BorrowBook extends javax.swing.JFrame {
                                     .addComponent(txtBorrowerName, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBorrower)
-                            .addComponent(btnBook))))
+                        .addComponent(btnBorrower)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnBookLayout.setVerticalGroup(
@@ -182,8 +171,7 @@ public class BorrowBook extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtBookName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBook))
+                    .addComponent(txtBookName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBorrowDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -207,7 +195,6 @@ public class BorrowBook extends javax.swing.JFrame {
         pnBook.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnBook.setLayer(txtReturnDate, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnBook.setLayer(btnBorrower, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(btnBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         btnCreate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/create.png"))); // NOI18N
@@ -324,11 +311,6 @@ public class BorrowBook extends javax.swing.JFrame {
         bnt.setVisible(true);
     }//GEN-LAST:event_btnBorrowerActionPerformed
 
-    private void btnBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookActionPerformed
-        BookNameTicket bnt1 = new BookNameTicket();
-        bnt1.setVisible(true);
-    }//GEN-LAST:event_btnBookActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -366,7 +348,6 @@ public class BorrowBook extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBook;
     private javax.swing.JButton btnBorrower;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnCreate;

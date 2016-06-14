@@ -10,6 +10,10 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -50,6 +54,7 @@ public class ListBook extends javax.swing.JFrame {
         btnDel = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
+        btnCreateTicket = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -140,6 +145,15 @@ public class ListBook extends javax.swing.JFrame {
             }
         });
 
+        btnCreateTicket.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnCreateTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/addTicket.png"))); // NOI18N
+        btnCreateTicket.setText("Create borrow ticket");
+        btnCreateTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateTicketActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
@@ -159,11 +173,13 @@ public class ListBook extends javax.swing.JFrame {
                         .addComponent(btnEdit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDel)
-                        .addGap(228, 228, 228)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAdd)
+                        .addGap(133, 133, 133)
                         .addComponent(btnHome)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAdd)
-                        .addGap(21, 21, 21))))
+                        .addComponent(btnCreateTicket)
+                        .addContainerGap())))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,7 +201,8 @@ public class ListBook extends javax.swing.JFrame {
                     .addComponent(btnDel)
                     .addComponent(btnAdd)
                     .addComponent(btnHome)
-                    .addComponent(btnEdit))
+                    .addComponent(btnEdit)
+                    .addComponent(btnCreateTicket))
                 .addContainerGap())
         );
         jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -196,6 +213,7 @@ public class ListBook extends javax.swing.JFrame {
         jLayeredPane1.setLayer(btnDel, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btnAdd, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btnHome, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnCreateTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -344,6 +362,34 @@ public class ListBook extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtSearchBookKeyReleased
 
+    private void btnCreateTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateTicketActionPerformed
+        try {
+            BorrowBook borrow = new BorrowBook();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date();
+            borrow.txtBorrowDate.setText(dateFormat.format(date));
+            date = addDays(date, 15);
+            borrow.txtReturnDate.setText(dateFormat.format(date));
+
+            Connection conn = MyConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement("select count(*) as totalTicket from BorrowList");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            int total = rs.getInt("totalTicket") + 1;
+            String ticketID = "TK0" + total;
+            borrow.txtTicket.setText(ticketID);
+            borrow.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnCreateTicketActionPerformed
+
+    public Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return (Date) cal.getTime();
+    }
     /**
      * @param args the command line arguments
      */
@@ -381,6 +427,7 @@ public class ListBook extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnCreateTicket;
     private javax.swing.JButton btnDel;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnHome;
