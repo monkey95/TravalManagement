@@ -1,0 +1,30 @@
+<h1 style = "text-align: center">Borrow Ticket</h1><br/>
+
+<p style="font-size: 16px">Ticket ID: </p>
+<table  style="width:100%; border-collapse: collapse;">
+  <tr style="border-top: 1px black solid;">
+    <td>
+      <p style="font-size: 16px">Book ID: </p>
+	  <p style="font-size: 16px">Book Name: </p>
+      <p style="font-size: 16px">Author Name: </p>
+      <p style="font-size: 16px">Publisher Name: </p>
+    </td>
+  </tr>
+  <tr style="border-top: 1px black solid; border-bottom: 1px black solid">
+    <td>
+      <p style="font-size:16px">Borrower ID: </p>
+      <p style="font-size: 16px">Borrower Name: </p>
+      <p style="font-size: 16px">Phone Number: </p>
+    </td>
+  </tr>
+  <tr>
+    <td style="border-bottom: 1px solid;">
+      <p style="font-size: 16px"><span style="margin-right: 210px;">Borrow Date: </span><span>Returned Date:</span></p>
+    </td>
+  </tr>
+</table><br/><br/>
+
+<div style="width:100%; font-size: 16px; orien">
+  <span style="width:50%; float: left; text-align: center; ">Librarian Sign</span>
+  <span style="width:50%; float:right; text-align: center;">Borrower Sign</span>
+</div>

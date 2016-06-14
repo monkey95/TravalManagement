@@ -227,13 +227,13 @@ public class EditBorrower extends javax.swing.JFrame {
         m = p.matcher(email);
         m2 = p2.matcher(phone);
         if (name.equals("")) {
-            JOptionPane.showMessageDialog(null, "Book ID cannot be blanked");
+            JOptionPane.showMessageDialog(null, "Borrower Name cannot be blanked");
         } else if (phone.equals("")) {
-            JOptionPane.showMessageDialog(null, "Book Name cannot be blanked");
+            JOptionPane.showMessageDialog(null, "Borrower Phone cannot be blanked");
         } else if (address.equals("")) {
-            JOptionPane.showMessageDialog(null, "Book Author cannot be blanked");
+            JOptionPane.showMessageDialog(null, "Borrower Address cannot be blanked");
         } else if (email.equals("")) {
-            JOptionPane.showMessageDialog(null, "Book Publisher cannot be blanked");
+            JOptionPane.showMessageDialog(null, "Borrower Email cannot be blanked");
         } else if(!m.matches()){
             JOptionPane.showMessageDialog(null, "Invalid email!");
         } else if(!m2.matches()){

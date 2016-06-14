@@ -5,6 +5,7 @@
  */
 package Run;
 
+import Run.ListBook;
 import GetConnect.MyConnect;
 import static Run.ListBorrow.tbBorrow;
 import java.sql.CallableStatement;
@@ -281,7 +282,7 @@ public class BorrowBook extends javax.swing.JFrame {
         String bookName = txtBookName.getText();
         String borrowDate = txtBorrowDate.getText();
         String returnDate = txtReturnDate.getText();
-        modelBorrow = (DefaultTableModel)tbBorrow.getModel();
+//        modelBorrow = (DefaultTableModel)tbBorrow.getModel();
         try {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Connection conn = MyConnect.getConnection();
@@ -293,8 +294,9 @@ public class BorrowBook extends javax.swing.JFrame {
             callSt.setDate(5, new java.sql.Date(dateFormat.parse(returnDate).getTime()));
             int result = callSt.executeUpdate();
             if (result != 0) {
-                Object[] row = {ticketID, borrowerName, bookName, phoneNumber, borrowDate, returnDate};
-                modelBorrow.insertRow(0, row);
+//                Object[] row = {ticketID, borrowerName, bookName, phoneNumber, borrowDate, returnDate};
+//                modelBorrow.insertRow(0, row);
+                ListBook.loadData();
                 this.dispose();
             }
         } catch (Exception e) {
@@ -360,7 +362,7 @@ public class BorrowBook extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane pnBook;
-    protected static javax.swing.JTextField txtBookName;
+    protected javax.swing.JTextField txtBookName;
     protected javax.swing.JTextField txtBorrowDate;
     protected static javax.swing.JTextField txtBorrowerName;
     protected static javax.swing.JTextField txtPhone;

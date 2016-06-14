@@ -6,6 +6,7 @@
 package Run;
 
 import GetConnect.MyConnect;
+import Run.Home;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,8 +24,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ListBook extends javax.swing.JFrame {
 
-    DefaultTableModel modelBook;
-    String bookID;
+    static DefaultTableModel modelBook;
+    String bookID, bookName,bookStatus;
 
     /**
      * Creates new form ListBook
@@ -240,6 +241,13 @@ public class ListBook extends javax.swing.JFrame {
         int indexBook = tbBook.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) tbBook.getModel();
         bookID = model.getValueAt(indexBook, 0).toString();
+        bookName = model.getValueAt(indexBook, 1).toString();
+        bookStatus = model.getValueAt(indexBook, 4).toString();
+        if(bookStatus.equals("Lended")){
+            btnCreateTicket.setEnabled(false);
+        }else{
+            btnCreateTicket.setEnabled(true);
+        }
     }//GEN-LAST:event_tbBookMouseClicked
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -287,7 +295,7 @@ public class ListBook extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
 
-    public void loadData() {
+    public static void loadData() {
         modelBook.setRowCount(0);
         try {
             Connection conn = MyConnect.getConnection();
@@ -370,6 +378,8 @@ public class ListBook extends javax.swing.JFrame {
             borrow.txtBorrowDate.setText(dateFormat.format(date));
             date = addDays(date, 15);
             borrow.txtReturnDate.setText(dateFormat.format(date));
+            borrow.txtBookName.setText(bookName);
+            borrow.bookID = bookID;
 
             Connection conn = MyConnect.getConnection();
             PreparedStatement ps = conn.prepareStatement("select count(*) as totalTicket from BorrowList");

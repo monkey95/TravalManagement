@@ -19,12 +19,12 @@ import javax.swing.table.DefaultTableModel;
  * @author VuManh
  */
 public class AddBorrwer extends javax.swing.JFrame {
-    private static final String email_valid = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+    String email_valid = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     Pattern p = Pattern.compile(email_valid);
     Matcher m ;
     
-    private static final String phone_valid = "0([0-9]{9,11})";
+    String phone_valid = "0([0-9]{9,11})";
     Pattern p2 = Pattern.compile(phone_valid);
     Matcher m2;
     /**

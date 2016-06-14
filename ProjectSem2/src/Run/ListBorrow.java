@@ -58,7 +58,6 @@ public class ListBorrow extends javax.swing.JFrame {
         txtSearchTicket = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         btnReturn = new javax.swing.JButton();
-        btnCreateTicket = new javax.swing.JButton();
         btnShowTicket = new javax.swing.JButton();
         cbSort = new javax.swing.JComboBox();
 
@@ -134,15 +133,6 @@ public class ListBorrow extends javax.swing.JFrame {
             }
         });
 
-        btnCreateTicket.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnCreateTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/addTicket.png"))); // NOI18N
-        btnCreateTicket.setText("Create borrow ticket");
-        btnCreateTicket.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreateTicketActionPerformed(evt);
-            }
-        });
-
         btnShowTicket.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnShowTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/show.png"))); // NOI18N
         btnShowTicket.setText("Show Expired Ticket");
@@ -162,23 +152,21 @@ public class ListBorrow extends javax.swing.JFrame {
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(btnShowTicket)
-                .addGap(18, 18, 18)
-                .addComponent(cbSort, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(160, 160, 160)
+                .addComponent(btnHome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnReturn)
+                .addGap(249, 249, 249))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnShowTicket)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
+                .addComponent(cbSort, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(txtSearchTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(btnCreateTicket)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
-                .addComponent(btnHome)
-                .addGap(188, 188, 188)
-                .addComponent(btnReturn)
-                .addGap(70, 70, 70))
+                .addGap(25, 25, 25))
             .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane2Layout.createSequentialGroup()
                     .addContainerGap()
@@ -188,22 +176,20 @@ public class ListBorrow extends javax.swing.JFrame {
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
-                .addContainerGap(63, Short.MAX_VALUE)
+                .addContainerGap(64, Short.MAX_VALUE)
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtSearchTicket, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3))
-                    .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnShowTicket)
-                        .addComponent(cbSort, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel3)
+                        .addComponent(cbSort, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnShowTicket))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnHome)
-                    .addComponent(btnReturn)
-                    .addComponent(btnCreateTicket))
-                .addGap(21, 21, 21))
+                    .addComponent(btnReturn))
+                .addGap(15, 15, 15))
             .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane2Layout.createSequentialGroup()
                     .addContainerGap()
@@ -216,7 +202,6 @@ public class ListBorrow extends javax.swing.JFrame {
         jLayeredPane2.setLayer(txtSearchTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(btnReturn, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(btnCreateTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(btnShowTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(cbSort, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -372,10 +357,6 @@ public class ListBorrow extends javax.swing.JFrame {
         bookID = model.getValueAt(indexBook, 1).toString();
     }//GEN-LAST:event_tbBorrowMouseClicked
 
-    private void btnCreateTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateTicketActionPerformed
-
-    }//GEN-LAST:event_btnCreateTicketActionPerformed
-
     public Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -420,7 +401,6 @@ public class ListBorrow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCreateTicket;
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnReturn;
     private javax.swing.JButton btnShowTicket;
