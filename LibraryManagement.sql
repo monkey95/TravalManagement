@@ -74,7 +74,7 @@ insert into Borrower values ('Chu Tien Tai', '0123456789','Gia Lam - Ha Noi','ti
 insert into Borrower values ('Dam Duy Huong', '0122123456','Hung Yen - Ha Noi','damhuong@gmail.com')
 
 insert into BorrowList values ('TK01', 1,'BK01','2016-05-02','2016-05-15','2016-06-02',1)
-insert into BorrowList values ('TK02', 2,'BK03','2016-05-22','2016-06-02','2016-06-06',1)
+insert into BorrowList values ('TK02', 2,'BK03','2016-05-22',null,'2016-06-06',0)
 
 select count(*) as totalTicket from BorrowList
 
@@ -85,14 +85,14 @@ select * from Author
 select * from Publisher
 select * from Account where username = 'admin'
 
-create procedure returnBook(
-	@ticketID varchar(10),
-	@bookID varchar(10)
-)as
-begin
-update BorrowList set ticketStatus = 0 where BorrowID = @ticketID
-update Book set [Status] = 0 where ID = @bookID
-end
+--create procedure returnBook(
+--	@ticketID varchar(10),
+--	@bookID varchar(10)
+--)as
+--begin
+--update BorrowList set ticketStatus = 0 where BorrowID = @ticketID
+--update Book set [Status] = 0 where ID = @bookID
+--end
 
 create procedure searchBorrowTicket(
 	@id varchar(10)
@@ -101,7 +101,16 @@ begin
 SELECT        BorrowList.BorrowID, Book.BookName, Borrower.BorrowerName, Borrower.PhoneNumber, BorrowList.BorrowDate, BorrowList.ReturnDate
 FROM            Book INNER JOIN
                          BorrowList ON Book.ID = BorrowList.IDBook INNER JOIN
-                         Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where ticketStatus = 1 and BorrowID like '%' + @id +'%'
+                         Borrower ON BorrowList.BorrowerID = Borrower.BorrowerID where BorrowID like '%' + @id +'%'
+end
+
+create procedure getAllBook
+as 
+begin
+SELECT        Book.ID, Book.BookName, Author.authorName, Publisher.publisherName, Book.Status
+FROM            Author INNER JOIN
+                         Book ON Author.authorID = Book.authorID INNER JOIN
+                         Publisher ON Book.publisherID = Publisher.publisherID where Book.Status = 0 or Book.Status = 1
 end
 
 create procedure signIn(
@@ -111,11 +120,14 @@ begin
 select * from Account where username = @username
 end
 
-create procedure searchBook(
+create procedure searchAllBook(
 	@id varchar(10)
 )as 
 begin
-Select * from Book where [Status]=0 and (ID like '%' +  @id + '%' or BookName like '%' +  @id + '%')
+SELECT        Book.ID, Book.BookName, Author.authorName, Publisher.publisherName, Book.Status
+FROM            Author INNER JOIN
+                         Book ON Author.authorID = Book.authorID INNER JOIN
+                         Publisher ON Book.publisherID = Publisher.publisherID where (Book.Status = 0 or Book.Status = 1) and (ID like '%' +  @id + '%' or BookName like '%' +  @id + '%')
 end
 
 create procedure searchAuthor(
@@ -183,7 +195,7 @@ create procedure AddTicket(
 	@returnDate date
 )as
 begin
-insert into BorrowList values (@ticketID, @borrowerID, @bookID, @borrowDate, @returnDate,1)
+insert into BorrowList values (@ticketID, @borrowerID, @bookID, @borrowDate, null, @returnDate,1)
 update Book set [Status] = 1 where ID=@bookID
 end
 

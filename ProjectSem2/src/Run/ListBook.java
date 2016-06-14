@@ -291,13 +291,13 @@ public class ListBook extends javax.swing.JFrame {
         modelBook.setRowCount(0);
         try {
             Connection conn = MyConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("select * from Book where [Status] = 0 or [Status] = 1");
-            ResultSet rs = ps.executeQuery();
+            CallableStatement callSt = conn.prepareCall("{call getAllBook()}");
+            ResultSet rs = callSt.executeQuery();
             while (rs.next()) {
                 String id = rs.getString("ID");
                 String bookName = rs.getString("BookName");
-                String authorName = rs.getString("AuthorName");
-                String publisher = rs.getString("Publisher");
+                String authorName = rs.getString("authorName");
+                String publisher = rs.getString("publisherName");
                 String statusString;
                 int status = rs.getInt("Status");
                 if (status == 0) {
@@ -338,14 +338,14 @@ public class ListBook extends javax.swing.JFrame {
         modelBook.setRowCount(0);
         try {
             Connection cn = MyConnect.getConnection();
-            CallableStatement callSt = cn.prepareCall("{call searchBook(?)}");
+            CallableStatement callSt = cn.prepareCall("{call searchAllBook(?)}");
             callSt.setString(1, searchText);
             ResultSet rs = callSt.executeQuery();
             while (rs.next()) {
                 String id = rs.getString("ID");
                 String bookName = rs.getString("BookName");
-                String authorName = rs.getString("AuthorName");
-                String publisher = rs.getString("Publisher");
+                String authorName = rs.getString("authorName");
+                String publisher = rs.getString("publisherName");
                 String statusString;
                 int status = rs.getInt("Status");
                 if (status == 0) {
