@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author VuManh
  */
-public class EditAuthor extends javax.swing.JFrame {
+public class AddPublisher extends javax.swing.JFrame {
     String email_valid = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     Pattern p = Pattern.compile(email_valid);
@@ -28,10 +28,9 @@ public class EditAuthor extends javax.swing.JFrame {
     Pattern p2 = Pattern.compile(phone_valid);
     Matcher m2;
     /**
-     * Creates new form EditAuthor
+     * Creates new form AddPublisher
      */
-    protected String id;
-    public EditAuthor() {
+    public AddPublisher() {
         initComponents();
     }
 
@@ -47,15 +46,18 @@ public class EditAuthor extends javax.swing.JFrame {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         pnBook = new javax.swing.JLayeredPane();
         jLabel2 = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        txtPhone = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAddress = new javax.swing.JTextArea();
-        jLabel3 = new javax.swing.JLabel();
-        txtPhone = new javax.swing.JTextField();
-        btnUpdate = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        txtID = new javax.swing.JTextField();
+        btnCreate = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -64,29 +66,35 @@ public class EditAuthor extends javax.swing.JFrame {
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, java.awt.Color.lightGray));
 
         pnBook.setBackground(new java.awt.Color(0, 0, 0));
-        pnBook.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.white), "Author Information", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Times New Roman", 1, 24))); // NOI18N
+        pnBook.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.white), "Publisher Information", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Times New Roman", 1, 24))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Name");
 
-        txtName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setText("Phone number");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Address");
 
-        txtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Email");
+
+        txtName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        txtPhone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        txtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txtAddress.setColumns(20);
         txtAddress.setRows(5);
         jScrollPane1.setViewportView(txtAddress);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("Phone number");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("ID");
 
-        txtPhone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtID.setEditable(false);
+        txtID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout pnBookLayout = new javax.swing.GroupLayout(pnBook);
         pnBook.setLayout(pnBookLayout);
@@ -98,19 +106,25 @@ public class EditAuthor extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel5)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
-                    .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                    .addComponent(txtPhone)
+                    .addComponent(txtName)
+                    .addComponent(txtEmail)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnBookLayout.setVerticalGroup(
             pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnBookLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBookLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -126,23 +140,34 @@ public class EditAuthor extends javax.swing.JFrame {
                 .addGroup(pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         pnBook.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtName, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnBook.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtName, javax.swing.JLayeredPane.DEFAULT_LAYER);
         pnBook.setLayer(txtPhone, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtID, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        btnUpdate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/save.png"))); // NOI18N
-        btnUpdate.setText("Update");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+        btnCreate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/create.png"))); // NOI18N
+        btnCreate.setText("Create");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
+                btnCreateActionPerformed(evt);
+            }
+        });
+
+        btnReset.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/reset.png"))); // NOI18N
+        btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
             }
         });
 
@@ -157,27 +182,29 @@ public class EditAuthor extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 2, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 0, 255));
-        jLabel1.setText("Edit Author");
+        jLabel1.setText("Add New Publisher");
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(534, 534, 534))
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(btnUpdate)
-                        .addGap(63, 63, 63)
-                        .addComponent(btnCancel)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
+                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                                .addComponent(btnCreate)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnReset)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnCancel)
+                                .addGap(16, 16, 16))
+                            .addComponent(pnBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(11, 11, 11))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,15 +212,17 @@ public class EditAuthor extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(pnBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(pnBook)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnCancel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCancel)
+                    .addComponent(btnReset)
+                    .addComponent(btnCreate))
+                .addContainerGap())
         );
         jLayeredPane1.setLayer(pnBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnUpdate, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnCreate, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnReset, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btnCancel, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -203,12 +232,12 @@ public class EditAuthor extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLayeredPane1)
                 .addContainerGap())
@@ -218,7 +247,8 @@ public class EditAuthor extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        String id = txtID.getText();
         String name = txtName.getText();
         String phone = txtPhone.getText();
         String address = txtAddress.getText();
@@ -226,13 +256,13 @@ public class EditAuthor extends javax.swing.JFrame {
         m = p.matcher(email);
         m2 = p2.matcher(phone);
         if (name.equals("")) {
-            JOptionPane.showMessageDialog(null, "Author Name cannot be blanked");
+            JOptionPane.showMessageDialog(null, "Name cannot be blanked");
         } else if (phone.equals("")) {
-            JOptionPane.showMessageDialog(null, "Author Phone cannot be blanked");
+            JOptionPane.showMessageDialog(null, "Phone number cannot be blanked");
         } else if (address.equals("")) {
-            JOptionPane.showMessageDialog(null, "Author Address cannot be blanked");
+            JOptionPane.showMessageDialog(null, "Address cannot be blanked");
         } else if (email.equals("")) {
-            JOptionPane.showMessageDialog(null, "Author Email cannot be blanked");
+            JOptionPane.showMessageDialog(null, "Email cannot be blanked");
         } else if(!m.matches()){
             JOptionPane.showMessageDialog(null, "Invalid email!");
         } else if(!m2.matches()){
@@ -240,35 +270,35 @@ public class EditAuthor extends javax.swing.JFrame {
         } else {
             try {
                 Connection conn = MyConnect.getConnection();
-                PreparedStatement ps = conn.prepareStatement("update Author set authorName= ?, authorPhone= ?, authorAddress= ?, authorEmail = ? where authorID = ?");
-                ps.setString(1, name);
-                ps.setString(2, phone);
-                ps.setString(3, address);
-                ps.setString(4, email);
-                ps.setString(5, id);
+                PreparedStatement ps = conn.prepareStatement("insert into Publisher values(?,?,?,?,?,0)");
+                ps.setString(1, id);
+                ps.setString(2, name);
+                ps.setString(3, phone);
+                ps.setString(4, address);
+                ps.setString(5, email);
                 int result = ps.executeUpdate();
-                if (result != 0) {
-                    DefaultTableModel modelBorrower = (DefaultTableModel) ListAuthor.tbAuthor.getModel();
-                    modelBorrower.setRowCount(0);
-                    PreparedStatement ps1 = conn.prepareStatement("select * from Author");
+                if(result != 0){
+                    JOptionPane.showMessageDialog(null, "Publisher has been added");
+                    PreparedStatement ps1 = conn.prepareStatement("select * from Publisher");
                     ResultSet rs = ps1.executeQuery();
-                    while (rs.next()) {
-                        String id = rs.getString("authorID");
-                        String aName = rs.getString("authorName");
-                        String phoneNumber = rs.getString("authorPhone");
-                        String aAddress = rs.getString("authorAddress");
-                        String emailBorrower = rs.getString("authorEmail");
-                        Object[] row = {id, aName, phoneNumber, aAddress, email};
-                        modelBorrower.addRow(row);
-                    }
-                    ListAuthor.tbAuthor.setModel(modelBorrower);
+                    rs.next();
+                    DefaultTableModel model = (DefaultTableModel) ListPublisher.tbPublisher.getModel();
+                    Object[] row = {id, name,phone,address,email};
+                    model.insertRow(0, row);
                     this.dispose();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-    }//GEN-LAST:event_btnUpdateActionPerformed
+    }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        txtName.setText("");
+        txtPhone.setText("");
+        txtAddress.setText("");
+        txtEmail.setText("");
+    }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         dispose();
@@ -291,38 +321,41 @@ public class EditAuthor extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditAuthor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddPublisher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditAuthor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddPublisher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditAuthor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddPublisher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditAuthor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddPublisher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditAuthor().setVisible(true);
+                new AddPublisher().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
-    private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnReset;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLayeredPane pnBook;
-    protected javax.swing.JTextArea txtAddress;
-    protected javax.swing.JTextField txtEmail;
-    protected javax.swing.JTextField txtName;
-    protected javax.swing.JTextField txtPhone;
+    private javax.swing.JTextArea txtAddress;
+    private javax.swing.JTextField txtEmail;
+    protected javax.swing.JTextField txtID;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPhone;
     // End of variables declaration//GEN-END:variables
 }

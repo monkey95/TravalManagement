@@ -211,6 +211,7 @@ public class ListPublisher extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtSearchAuthorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchAuthorKeyReleased
@@ -314,8 +315,19 @@ public class ListPublisher extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        AddBorrwer ab = new AddBorrwer();
-        ab.setVisible(true);
+        try {
+            AddPublisher ap = new AddPublisher();
+            Connection conn = MyConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement("select count(*) as total from Publisher");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            int total = rs.getInt("total") + 1;
+            String ID = "PB0" + total;
+            ap.txtID.setText(ID);
+            ap.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     /**

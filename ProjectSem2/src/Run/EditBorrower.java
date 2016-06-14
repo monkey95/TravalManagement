@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author VuManh
  */
 public class EditBorrower extends javax.swing.JFrame {
-    private static final String email_valid = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+    String email_valid = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     Pattern p = Pattern.compile(email_valid);
     Matcher m ;

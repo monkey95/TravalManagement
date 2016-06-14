@@ -33,6 +33,8 @@ public class Home extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btnBorrow = new javax.swing.JButton();
         btnBorrower = new javax.swing.JButton();
+        btnPublisher = new javax.swing.JButton();
+        btnAuthor = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -73,41 +75,67 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        btnPublisher.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        btnPublisher.setText("Publisher List");
+        btnPublisher.setOpaque(false);
+        btnPublisher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPublisherActionPerformed(evt);
+            }
+        });
+
+        btnAuthor.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        btnAuthor.setText("Author List");
+        btnAuthor.setOpaque(false);
+        btnAuthor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAuthorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(198, 198, 198)
-                        .addComponent(btnBorrow))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(btnBook)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 104, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(87, 87, 87))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnBorrower)
-                        .addGap(34, 34, 34))
+                        .addComponent(btnBook)
+                        .addGap(130, 130, 130))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(87, 87, 87))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAuthor)
+                            .addComponent(btnPublisher))
+                        .addGap(66, 66, 66)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBorrow)
+                    .addComponent(btnBorrower))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
-                .addComponent(btnBook)
-                .addGap(18, 18, 18)
-                .addComponent(btnBorrow)
-                .addGap(18, 18, 18)
-                .addComponent(btnBorrower)
-                .addGap(26, 26, 26))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(btnBook)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAuthor)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPublisher))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(btnBorrower)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBorrow)))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -144,6 +172,18 @@ public class Home extends javax.swing.JFrame {
         lborrower.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBorrowerActionPerformed
+
+    private void btnPublisherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPublisherActionPerformed
+        ListPublisher lb = new ListPublisher();
+        lb.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnPublisherActionPerformed
+
+    private void btnAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuthorActionPerformed
+        ListAuthor la = new ListAuthor();
+        la.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAuthorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,9 +222,11 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAuthor;
     private javax.swing.JButton btnBook;
     private javax.swing.JButton btnBorrow;
     private javax.swing.JButton btnBorrower;
+    private javax.swing.JButton btnPublisher;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
