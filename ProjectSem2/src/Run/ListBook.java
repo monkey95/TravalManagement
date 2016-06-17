@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
 public class ListBook extends javax.swing.JFrame {
 
     static DefaultTableModel modelBook;
-    String bookID, bookName,bookStatus;
+    String bookID, bookName, bookStatus;
 
     /**
      * Creates new form ListBook
@@ -243,9 +243,9 @@ public class ListBook extends javax.swing.JFrame {
         bookID = model.getValueAt(indexBook, 0).toString();
         bookName = model.getValueAt(indexBook, 1).toString();
         bookStatus = model.getValueAt(indexBook, 4).toString();
-        if(bookStatus.equals("Lended")){
+        if (bookStatus.equals("Lended")) {
             btnCreateTicket.setEnabled(false);
-        }else{
+        } else {
             btnCreateTicket.setEnabled(true);
         }
     }//GEN-LAST:event_tbBookMouseClicked
@@ -257,14 +257,16 @@ public class ListBook extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "You must select a book to edit");
             } else {
                 Connection conn = MyConnect.getConnection();
-                PreparedStatement ps = conn.prepareStatement("select * from Book where ID = ?");
-                ps.setString(1, bookID);
-                ResultSet rs = ps.executeQuery();
+                CallableStatement callSt = conn.prepareCall("{call getBookDetail(?)}");
+                callSt.setString(1, bookID);
+                ResultSet rs = callSt.executeQuery();
                 if (rs.next()) {
                     eb.txtBookID.setText(rs.getString("ID"));
                     eb.txtBName.setText(rs.getString("BookName"));
-                    eb.txtAuthor.setText(rs.getString("AuthorName"));
-                    eb.txtPublisher.setText(rs.getString("Publisher"));
+                    eb.txtAuthor.setText(rs.getString("authorName"));
+                    eb.txtPublisher.setText(rs.getString("publisherName"));
+                    eb.authorID = rs.getString("authorID");
+                    eb.publisherID = rs.getString("publisherID");
                 }
                 eb.setVisible(true);
             }
@@ -400,6 +402,7 @@ public class ListBook extends javax.swing.JFrame {
         cal.add(Calendar.DATE, days); //minus number would decrement the days
         return (Date) cal.getTime();
     }
+
     /**
      * @param args the command line arguments
      */

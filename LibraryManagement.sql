@@ -86,6 +86,17 @@ select * from Author
 select * from Publisher
 select * from Account where username = 'admin'
 
+create procedure getBookDetail(
+	@id varchar(7)
+)
+as
+begin
+SELECT        Book.ID, Book.BookName, Book.authorID, Book.publisherID, Author.authorName, Publisher.publisherName
+FROM            Author INNER JOIN
+                         Book ON Author.authorID = Book.authorID INNER JOIN
+                         Publisher ON Book.publisherID = Publisher.publisherID where Book.ID = @id
+end
+
 create procedure returnBook(
 	@ticketID varchar(10),
 	@bookID varchar(10),
