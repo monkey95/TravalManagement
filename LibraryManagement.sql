@@ -97,6 +97,17 @@ FROM            Author INNER JOIN
                          Publisher ON Book.publisherID = Publisher.publisherID where Book.ID = @id
 end
 
+create procedure editBook(
+	@bookId varchar(7),
+	@bookName varchar(50),
+	@authorID varchar(7),
+	@publisherID varchar(7)
+)
+as
+begin
+update Book set BookName = @bookName, authorID = @authorID, publisherID = @publisherID where Book.ID = @bookId
+end
+
 create procedure returnBook(
 	@ticketID varchar(10),
 	@bookID varchar(10),

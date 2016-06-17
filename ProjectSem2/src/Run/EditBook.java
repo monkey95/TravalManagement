@@ -6,7 +6,9 @@
 package Run;
 
 import GetConnect.MyConnect;
+import static Run.ListBook.modelBook;
 import static Run.ListBook.tbBook;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,10 +20,12 @@ import javax.swing.table.DefaultTableModel;
  * @author VuManh
  */
 public class EditBook extends javax.swing.JFrame {
+
     /**
      * Creates new form EditBook
      */
-    String authorID, publisherID;
+    static String authorID, publisherID;
+
     public EditBook() {
         initComponents();
     }
@@ -82,19 +86,18 @@ public class EditBook extends javax.swing.JFrame {
         txtPublisher.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         btnEditBookAuthor.setText("+");
+        btnEditBookAuthor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditBookAuthorActionPerformed(evt);
+            }
+        });
 
         btnEditBookPublisher.setText("+");
-
-        pnBook.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtBookID, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtBName, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtAuthor, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(txtPublisher, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(btnEditBookAuthor, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        pnBook.setLayer(btnEditBookPublisher, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        btnEditBookPublisher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditBookPublisherActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnBookLayout = new javax.swing.GroupLayout(pnBook);
         pnBook.setLayout(pnBookLayout);
@@ -121,8 +124,7 @@ public class EditBook extends javax.swing.JFrame {
                     .addGroup(pnBookLayout.createSequentialGroup()
                         .addComponent(txtAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEditBookAuthor)))
-                .addContainerGap())
+                        .addComponent(btnEditBookAuthor))))
         );
         pnBookLayout.setVerticalGroup(
             pnBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,6 +149,16 @@ public class EditBook extends javax.swing.JFrame {
                     .addComponent(btnEditBookPublisher))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
+        pnBook.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtBookID, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtBName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtAuthor, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(txtPublisher, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(btnEditBookAuthor, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pnBook.setLayer(btnEditBookPublisher, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         btnUpdate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/save.png"))); // NOI18N
@@ -169,11 +181,6 @@ public class EditBook extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 2, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 0, 255));
         jLabel1.setText("Edit Book");
-
-        jLayeredPane1.setLayer(pnBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnUpdate, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnCancel, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -208,6 +215,10 @@ public class EditBook extends javax.swing.JFrame {
                     .addComponent(btnCancel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+        jLayeredPane1.setLayer(pnBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnUpdate, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnCancel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -215,7 +226,7 @@ public class EditBook extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -244,22 +255,22 @@ public class EditBook extends javax.swing.JFrame {
         } else {
             try {
                 Connection conn = MyConnect.getConnection();
-                PreparedStatement ps = conn.prepareStatement("update Book set BookName= ?, AuthorName= ?, Publisher= ? where ID = ?");
-                ps.setString(1, bookName);
-                ps.setString(2, author);
-                ps.setString(3, publisher);
-                ps.setString(4, bookID);
-                int result = ps.executeUpdate();
+                CallableStatement callSt = conn.prepareCall("{call editBook(?,?,?,?)}");
+                callSt.setString(1, bookID);
+                callSt.setString(2, bookName);
+                callSt.setString(3, authorID);
+                callSt.setString(4, publisherID);
+                int result = callSt.executeUpdate();
                 if (result != 0) {
                     DefaultTableModel modelBook = (DefaultTableModel) tbBook.getModel();
                     modelBook.setRowCount(0);
-                    PreparedStatement ps1 = conn.prepareStatement("select * from Book");
-                    ResultSet rs = ps1.executeQuery();
+                    callSt = conn.prepareCall("{call getAllBook()}");
+                    ResultSet rs = callSt.executeQuery();
                     while (rs.next()) {
                         String id = rs.getString("ID");
-                        String bName = rs.getString("BookName");
-                        String authorName = rs.getString("AuthorName");
-                        String bPublisher = rs.getString("Publisher");
+                        String bookNameLoad = rs.getString("BookName");
+                        String authorName = rs.getString("authorName");
+                        String publisherLoad = rs.getString("publisherName");
                         String statusString;
                         int status = rs.getInt("Status");
                         if (status == 0) {
@@ -267,7 +278,7 @@ public class EditBook extends javax.swing.JFrame {
                         } else {
                             statusString = "Lended";
                         }
-                        Object[] row = {id, bName, authorName, bPublisher, statusString};
+                        Object[] row = {id, bookNameLoad, authorName, publisherLoad, statusString};
                         modelBook.addRow(row);
                     }
                     tbBook.setModel(modelBook);
@@ -282,6 +293,16 @@ public class EditBook extends javax.swing.JFrame {
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnEditBookAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditBookAuthorActionPerformed
+        AuthorName an = new AuthorName();
+        an.setVisible(true);
+    }//GEN-LAST:event_btnEditBookAuthorActionPerformed
+
+    private void btnEditBookPublisherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditBookPublisherActionPerformed
+        PublisherName pn = new PublisherName();
+        pn.setVisible(true);
+    }//GEN-LAST:event_btnEditBookPublisherActionPerformed
 
     /**
      * @param args the command line arguments
@@ -330,9 +351,9 @@ public class EditBook extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane pnBook;
-    protected javax.swing.JTextField txtAuthor;
+    protected static javax.swing.JTextField txtAuthor;
     protected javax.swing.JTextField txtBName;
     protected javax.swing.JTextField txtBookID;
-    protected javax.swing.JTextField txtPublisher;
+    protected static javax.swing.JTextField txtPublisher;
     // End of variables declaration//GEN-END:variables
 }

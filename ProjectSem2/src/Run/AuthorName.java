@@ -9,9 +9,11 @@ import Run.BorrowBook;
 import GetConnect.MyConnect;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -20,12 +22,32 @@ import javax.swing.table.DefaultTableModel;
 public class AuthorName extends javax.swing.JFrame {
     DefaultTableModel modelBorrower;
     CallableStatement callSt;
-    String borrowerName, borrowerPhone, borrowerID;
+    String authorName, authorPhone, authorID;
     /**
      * Creates new form AuthorName
      */
     public AuthorName() {
         initComponents();
+        TableColumnModel col = tblAuthor.getColumnModel();
+        col.removeColumn(col.getColumn(0));
+
+        modelBorrower = (DefaultTableModel) tblAuthor.getModel();
+        modelBorrower.setRowCount(0);
+        try {
+            Connection conn = MyConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement("select * from Author");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("authorID");
+                String name = rs.getString("authorName");
+                String phone = rs.getString("authorPhone");
+                Object[] row = {id, name, phone};
+                modelBorrower.addRow(row);
+            }
+            tblAuthor.setModel(modelBorrower);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -41,7 +63,7 @@ public class AuthorName extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtSearchBorrower = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbSearchBorrower = new javax.swing.JTable();
+        tblAuthor = new javax.swing.JTable();
         btnDone = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -59,7 +81,7 @@ public class AuthorName extends javax.swing.JFrame {
             }
         });
 
-        tbSearchBorrower.setModel(new javax.swing.table.DefaultTableModel(
+        tblAuthor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -75,12 +97,12 @@ public class AuthorName extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tbSearchBorrower.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblAuthor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbSearchBorrowerMouseClicked(evt);
+                tblAuthorMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tbSearchBorrower);
+        jScrollPane1.setViewportView(tblAuthor);
 
         btnDone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnDone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/done.png"))); // NOI18N
@@ -151,13 +173,13 @@ public class AuthorName extends javax.swing.JFrame {
         modelBorrower.setRowCount(0);
         try {
             Connection cn = MyConnect.getConnection();
-            callSt = cn.prepareCall("{call searchBorrower(?)}");
+            callSt = cn.prepareCall("{call searchAuthor(?)}");
             callSt.setString(1, searchText);
             ResultSet rs = callSt.executeQuery();
             while (rs.next()) {
-                String id = rs.getString("BorrowerID");
-                String name = rs.getString("BorrowerName");
-                String phone = rs.getString("PhoneNumber");
+                String id = rs.getString("authorID");
+                String name = rs.getString("authorName");
+                String phone = rs.getString("authorPhone");
                 Object[] row = {id, name, phone};
                 modelBorrower.addRow(row);
             }
@@ -166,21 +188,25 @@ public class AuthorName extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtSearchBorrowerKeyReleased
 
-    private void tbSearchBorrowerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSearchBorrowerMouseClicked
-        int indexBook = tbSearchBorrower.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel) tbSearchBorrower.getModel();
-        borrowerID = model.getValueAt(indexBook, 0).toString();
-        borrowerName = model.getValueAt(indexBook, 1).toString();
-        borrowerPhone = model.getValueAt(indexBook, 2).toString();
-    }//GEN-LAST:event_tbSearchBorrowerMouseClicked
+    private void tblAuthorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAuthorMouseClicked
+        int indexBook = tblAuthor.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) tblAuthor.getModel();
+        authorID = model.getValueAt(indexBook, 0).toString();
+        authorName = model.getValueAt(indexBook, 1).toString();
+        authorPhone = model.getValueAt(indexBook, 2).toString();
+    }//GEN-LAST:event_tblAuthorMouseClicked
 
     private void btnDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoneActionPerformed
-        if(borrowerName == null || borrowerPhone == null){
-            JOptionPane.showMessageDialog(null, "You must select a borrower");
-        }else{
-            BorrowBook.id = borrowerID;
-            BorrowBook.txtBorrowerName.setText(borrowerName);
-            BorrowBook.txtPhone.setText(borrowerPhone);
+        if (authorName == null || authorPhone == null) {
+            JOptionPane.showMessageDialog(null, "You must select a author");
+        } else {
+            try {
+                AddBook.txtAuthor.setText(authorName);
+                AddBook.authorID = authorID;
+            } catch (Exception e) {
+                EditBook.txtAuthor.setText(authorName);
+                EditBook.authorID = authorID;
+            }
             this.dispose();
         }
     }//GEN-LAST:event_btnDoneActionPerformed
@@ -225,7 +251,7 @@ public class AuthorName extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbSearchBorrower;
+    private javax.swing.JTable tblAuthor;
     private javax.swing.JTextField txtSearchBorrower;
     // End of variables declaration//GEN-END:variables
 }

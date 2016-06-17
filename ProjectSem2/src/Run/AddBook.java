@@ -6,6 +6,7 @@
 package Run;
 
 import GetConnect.MyConnect;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
@@ -16,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  * @author VuManh
  */
 public class AddBook extends javax.swing.JFrame {
-
+    static String authorID, publisherID;
     /**
      * Creates new form AddTours
      */
@@ -271,8 +272,8 @@ public class AddBook extends javax.swing.JFrame {
                 PreparedStatement ps = conn.prepareStatement("insert into Book values(?,?,?,?,?)");
                 ps.setString(1, id);
                 ps.setString(2, bookName);
-                ps.setString(3, author);
-                ps.setString(4, publisher);
+                ps.setString(3, authorID);
+                ps.setString(4, publisherID);
                 ps.setInt(5, 0);
                 int result = ps.executeUpdate();
                 if(result != 0){
@@ -358,9 +359,9 @@ public class AddBook extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane pnBook;
-    private javax.swing.JTextField txtAuthor;
+    protected static javax.swing.JTextField txtAuthor;
     private javax.swing.JTextField txtBName;
     protected javax.swing.JTextField txtBookID;
-    private javax.swing.JTextField txtPublisher;
+    protected static javax.swing.JTextField txtPublisher;
     // End of variables declaration//GEN-END:variables
 }

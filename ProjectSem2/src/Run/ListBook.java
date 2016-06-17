@@ -245,8 +245,12 @@ public class ListBook extends javax.swing.JFrame {
         bookStatus = model.getValueAt(indexBook, 4).toString();
         if (bookStatus.equals("Lended")) {
             btnCreateTicket.setEnabled(false);
+            btnEdit.setEnabled(false);
+            btnDel.setEnabled(false);
         } else {
             btnCreateTicket.setEnabled(true);
+            btnEdit.setEnabled(true);
+            btnDel.setEnabled(true);
         }
     }//GEN-LAST:event_tbBookMouseClicked
 
