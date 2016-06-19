@@ -35,7 +35,7 @@ public class PublisherName extends javax.swing.JFrame {
         modelBorrower.setRowCount(0);
         try {
             Connection conn = MyConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("select * from Publisher");
+            PreparedStatement ps = conn.prepareStatement("select * from Publisher where publisherStatus = 0");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String id = rs.getString("publisherID");

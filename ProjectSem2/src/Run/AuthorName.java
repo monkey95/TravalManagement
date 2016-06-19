@@ -35,7 +35,7 @@ public class AuthorName extends javax.swing.JFrame {
         modelBorrower.setRowCount(0);
         try {
             Connection conn = MyConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("select * from Author");
+            PreparedStatement ps = conn.prepareStatement("select * from Author where authorStatus = 0");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String id = rs.getString("authorID");
