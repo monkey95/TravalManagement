@@ -16,15 +16,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
 
 /**
  *
  * @author VuManh
  */
 public class BorrowBook extends javax.swing.JFrame {
+    
     DefaultTableModel modelBorrow;
     CallableStatement callSt;
-
+    
     protected static String id, bookID;
 
     /**
@@ -282,7 +285,6 @@ public class BorrowBook extends javax.swing.JFrame {
         String bookName = txtBookName.getText();
         String borrowDate = txtBorrowDate.getText();
         String returnDate = txtReturnDate.getText();
-//        modelBorrow = (DefaultTableModel)tbBorrow.getModel();
         try {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Connection conn = MyConnect.getConnection();
@@ -294,8 +296,44 @@ public class BorrowBook extends javax.swing.JFrame {
             callSt.setDate(5, new java.sql.Date(dateFormat.parse(returnDate).getTime()));
             int result = callSt.executeUpdate();
             if (result != 0) {
-//                Object[] row = {ticketID, borrowerName, bookName, phoneNumber, borrowDate, returnDate};
-//                modelBorrow.insertRow(0, row);
+                PrintTicket pt = new PrintTicket();
+                pt.tpPrintTicket.setContentType("text/html");
+                HTMLEditorKit kit = new HTMLEditorKit();
+                HTMLDocument doc = (HTMLDocument) pt.tpPrintTicket.getDocument();
+                pt.tpPrintTicket.setEditorKit(kit);
+                pt.tpPrintTicket.setDocument(doc);
+                pt.tpPrintTicket.setText("<html>\n"
+                        + "<body>\n"
+                        + "<h1 style = \"text-align: center\">Borrow Ticket</h1><br/>\n"
+                        + "<p style=\"font-size: 16px\">Ticket ID: " + ticketID + "</p>\n"
+                        + "<table  style=\"width:100%; border-collapse: collapse;\">\n"
+                        + "  <tr style=\"border-top: 1px black solid;\">\n"
+                        + "    <td>\n"
+                        + "      <p style=\"font-size: 16px\">Book ID: " + bookID + "</p>\n"
+                        + "	  <p style=\"font-size: 16px\">Book Name: " + bookName + "</p>\n"
+                        + "    </td>\n"
+                        + "  </tr>\n"
+                        + "  <tr style=\"border-top: 1px black solid; border-bottom: 1px black solid\">\n"
+                        + "    <td>\n"
+                        + "      <p style=\"font-size:16px\">Borrower ID: " + id + "</p>\n"
+                        + "      <p style=\"font-size: 16px\">Borrower Name: " + borrowerName + "</p>\n"
+                        + "      <p style=\"font-size: 16px\">Phone Number: " + phoneNumber + "</p>\n"
+                        + "    </td>\n"
+                        + "  </tr>\n"
+                        + "  <tr>\n"
+                        + "    <td style=\"border-bottom: 1px solid;\">\n"
+                        + "      <p style=\"font-size: 16px\"><span style=\"margin-right: 210px;\">Borrow Date: " + borrowDate + "</span></p><p style=\"font-size: 16px\"><span>Returned Date: " + returnDate + "</span></p>\n"
+                        + "    </td>\n"
+                        + "  </tr>\n"
+                        + "</table><br/><br/>\n"
+                        + "\n"
+                        + "<div style=\"width:100%; font-size: 16px; orien\">\n"
+                        + "  <span style=\"width:50%; float: left; text-align: center; \">Librarian Sign</span></br>\n"
+                        + "  <span style=\"width:50%; float:right; text-align: center;\">Borrower Sign</span>\n"
+                        + "</div>\n"
+                        + "</body>\n"
+                        + "</html>");
+                pt.tpPrintTicket.print();
                 ListBook.loadData();
                 this.dispose();
             }
