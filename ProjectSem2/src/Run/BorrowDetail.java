@@ -5,11 +5,25 @@
  */
 package Run;
 
+import GetConnect.MyConnect;
+import static Run.ListBorrow.tbBorrow;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author monki
  */
 public class BorrowDetail extends javax.swing.JFrame {
+
+    protected String ticketID, bookID;
+    CallableStatement callSt;
+    DefaultTableModel modelBorrow;
 
     /**
      * Creates new form BorrowDetail
@@ -68,6 +82,13 @@ public class BorrowDetail extends javax.swing.JFrame {
         txtRDate.setEditable(false);
         txtRDate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        jLayeredPane2.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(txtName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(txtBDate, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(txtRDate, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
         jLayeredPane2Layout.setHorizontalGroup(
@@ -106,12 +127,6 @@ public class BorrowDetail extends javax.swing.JFrame {
                     .addComponent(txtRDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jLayeredPane2.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(txtName, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(txtBDate, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(txtRDate, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Days Expired");
@@ -127,6 +142,19 @@ public class BorrowDetail extends javax.swing.JFrame {
 
         btnSubmit.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSubmit.setText("Submit");
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitActionPerformed(evt);
+            }
+        });
+
+        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLayeredPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(txtDay, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(txtPrice, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnSubmit, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -179,13 +207,6 @@ public class BorrowDetail extends javax.swing.JFrame {
                 .addComponent(btnSubmit)
                 .addGap(31, 31, 31))
         );
-        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLayeredPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(txtDay, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(txtPrice, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnSubmit, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -207,6 +228,69 @@ public class BorrowDetail extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+        try {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date();
+            Connection conn = MyConnect.getConnection();
+            callSt = conn.prepareCall("{call returnBook(?,?,?)}");
+            callSt.setString(1, ticketID);
+            callSt.setString(2, bookID);
+            callSt.setDate(3, new java.sql.Date(dateFormat.parse(dateFormat.format(date)).getTime()));
+            callSt.executeUpdate();
+            modelBorrow = (DefaultTableModel) tbBorrow.getModel();
+            modelBorrow.setRowCount(0);
+            String selectedItem = ListBorrow.cbSort.getSelectedItem().toString();
+            if (selectedItem.equals("All")) {
+                getBorrowList("{call getBorrowList()}");
+            } else if (selectedItem.equals("Expired Ticket")) {
+                getBorrowList("{call getExpiredBorrowList()}");
+            } else if (selectedItem.equals("Unexpired Ticket")) {
+                getBorrowList("{call getUnexpiredBorrowList()}");
+            } else if (selectedItem.equals("Returned Ticket")) {
+                getBorrowList("{call getReturnedBorrowList()}");
+            }
+            this.dispose();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnSubmitActionPerformed
+
+     public void getBorrowList(String query) {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Connection cn = MyConnect.getConnection();
+            callSt = cn.prepareCall(query);
+            ResultSet rs = callSt.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("BorrowID");
+                String bookID = rs.getString("ID");
+                String borrowerName = rs.getString("BorrowerName");
+                String bookName = rs.getString("BookName");
+                String phone = rs.getString("PhoneNumber");
+                String borrowDate = rs.getString("BorrowDate");
+                String returnDate = rs.getString("ReturnDate");
+                String actualReturnDate = rs.getString("ActualReturnDate");
+                long diffDays = 0;
+                String moneyRS = "0";
+                if (actualReturnDate == null) {
+                    Date d1 = new Date();
+                    Date d2 = formatter.parse(returnDate);
+                    long result = d1.getTime() - d2.getTime();
+                    diffDays = result / (24 * 60 * 60 * 1000);
+                    long money = diffDays *  5000;
+                    moneyRS = String.valueOf(money);
+                    if(diffDays < 0){
+                        diffDays = 0;
+                    }
+                }
+                Object[] row = {id, bookID, borrowerName, bookName, phone, borrowDate, returnDate, actualReturnDate,diffDays,moneyRS};
+                modelBorrow.addRow(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -252,10 +336,10 @@ public class BorrowDetail extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
-    private javax.swing.JTextField txtBDate;
-    private javax.swing.JTextField txtDay;
-    private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPrice;
-    private javax.swing.JTextField txtRDate;
+    protected javax.swing.JTextField txtBDate;
+    protected javax.swing.JTextField txtDay;
+    protected javax.swing.JTextField txtName;
+    protected javax.swing.JTextField txtPrice;
+    protected javax.swing.JTextField txtRDate;
     // End of variables declaration//GEN-END:variables
 }

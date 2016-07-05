@@ -29,7 +29,7 @@ public class ListBorrow extends javax.swing.JFrame {
 
     DefaultTableModel modelBorrow;
     CallableStatement callSt;
-    String ticketID, bookID, actualReturnDate;
+    String ticketID, bookID, actualReturnDate, borrowName, borrowDate, returnDate, dayExpired, publishedPrice;
 
     /**
      * Creates new form AddTours
@@ -160,6 +160,14 @@ public class ListBorrow extends javax.swing.JFrame {
         cbSort.setMaximumRowCount(4);
         cbSort.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Expired Ticket", "Unexpired Ticket", "Returned Ticket" }));
 
+        jLayeredPane2.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(btnHome, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(txtSearchTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(btnReturn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(cbSort, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
         jLayeredPane2Layout.setHorizontalGroup(
@@ -206,13 +214,6 @@ public class ListBorrow extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addContainerGap(454, Short.MAX_VALUE)))
         );
-        jLayeredPane2.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(btnHome, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(txtSearchTicket, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(btnReturn, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(cbSort, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -257,7 +258,7 @@ public class ListBorrow extends javax.swing.JFrame {
                 String returnDate = rs.getString("ReturnDate");
                 String actualReturnDate = rs.getString("ActualReturnDate");
                 long diffDays = 0;
-                String moneyRS = null;
+                String moneyRS = "0";
                 if (actualReturnDate == null) {
                     Date d1 = new Date();
                     Date d2 = formatter.parse(returnDate);
@@ -267,7 +268,6 @@ public class ListBorrow extends javax.swing.JFrame {
                     moneyRS = String.valueOf(money);
                     if(diffDays < 0){
                         diffDays = 0;
-                        moneyRS = null;
                     }
                 }
                 Object[] row = {id, bookID, borrowerName, bookName, phone, borrowDate, returnDate, actualReturnDate,diffDays,moneyRS};
@@ -310,25 +310,15 @@ public class ListBorrow extends javax.swing.JFrame {
             if (ticketID == null) {
                 JOptionPane.showMessageDialog(null, "You must select a ticket to return");
             } else {
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = new Date();
-                Connection conn = MyConnect.getConnection();
-                callSt = conn.prepareCall("{call returnBook(?,?,?)}");
-                callSt.setString(1, ticketID);
-                callSt.setString(2, bookID);
-                callSt.setDate(3, new java.sql.Date(dateFormat.parse(dateFormat.format(date)).getTime()));
-                callSt.executeUpdate();
-                modelBorrow.setRowCount(0);
-                String selectedItem = cbSort.getSelectedItem().toString();
-                if (selectedItem.equals("All")) {
-                    getBorrowList("{call getBorrowList()}");
-                } else if (selectedItem.equals("Expired Ticket")) {
-                    getBorrowList("{call getExpiredBorrowList()}");
-                } else if (selectedItem.equals("Unexpired Ticket")) {
-                    getBorrowList("{call getUnexpiredBorrowList()}");
-                } else if (selectedItem.equals("Returned Ticket")) {
-                    getBorrowList("{call getReturnedBorrowList()}");
-                }
+                BorrowDetail detail = new BorrowDetail();
+                detail.txtName.setText(borrowName);
+                detail.txtBDate.setText(borrowDate);
+                detail.txtRDate.setText(returnDate);
+                detail.txtDay.setText(dayExpired);
+                detail.txtPrice.setText(publishedPrice);
+                detail.ticketID = ticketID;
+                detail.bookID = bookID;
+                detail.setVisible(true);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -340,6 +330,11 @@ public class ListBorrow extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tbBorrow.getModel();
         ticketID = model.getValueAt(indexBook, 0).toString();
         bookID = model.getValueAt(indexBook, 1).toString();
+        borrowName = model.getValueAt(indexBook, 2).toString();
+        borrowDate = model.getValueAt(indexBook, 5).toString();
+        returnDate = model.getValueAt(indexBook, 6).toString();
+        dayExpired = model.getValueAt(indexBook, 8).toString();
+        publishedPrice = model.getValueAt(indexBook, 9).toString();
         try {
             actualReturnDate = model.getValueAt(indexBook, 7).toString();
             btnReturn.setEnabled(false);
@@ -394,7 +389,7 @@ public class ListBorrow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnReturn;
-    private javax.swing.JComboBox cbSort;
+    protected static javax.swing.JComboBox cbSort;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLayeredPane jLayeredPane2;
