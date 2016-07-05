@@ -294,7 +294,6 @@ public class AddBook extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        txtBookID.setText("");
         txtBName.setText("");
         txtAuthor.setText("");
         txtPublisher.setText("");

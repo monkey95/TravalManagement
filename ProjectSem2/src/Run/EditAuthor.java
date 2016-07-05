@@ -19,8 +19,8 @@ import javax.swing.table.DefaultTableModel;
  * @author VuManh
  */
 public class EditAuthor extends javax.swing.JFrame {
-    String email_valid = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    String email_valid = "^[_A-Za-z0-9]+(.[_A-Za-z0-9]+)*@"
+		+ "[A-Za-z]+(.[A-Za-z]+)*(.[A-Za-z]{2,})$";
     Pattern p = Pattern.compile(email_valid);
     Matcher m ;
     
