@@ -95,14 +95,14 @@ public class ListBorrow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Ticket ID", "Book ID", "Borrower Name", "Book Name", "Borrower Phone", "Borrow Date", "Return Date", "Actual Returned", "Days Expired"
+                "Ticket ID", "Book ID", "Borrower Name", "Book Name", "Borrower Phone", "Borrow Date", "Return Date", "Actual Returned", "Days Expired", "Pubnished Price"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -257,16 +257,20 @@ public class ListBorrow extends javax.swing.JFrame {
                 String returnDate = rs.getString("ReturnDate");
                 String actualReturnDate = rs.getString("ActualReturnDate");
                 long diffDays = 0;
+                String moneyRS = null;
                 if (actualReturnDate == null) {
                     Date d1 = new Date();
                     Date d2 = formatter.parse(returnDate);
                     long result = d1.getTime() - d2.getTime();
                     diffDays = result / (24 * 60 * 60 * 1000);
+                    long money = diffDays *  5000;
+                    moneyRS = String.valueOf(money);
                     if(diffDays < 0){
                         diffDays = 0;
+                        moneyRS = null;
                     }
                 }
-                Object[] row = {id, bookID, borrowerName, bookName, phone, borrowDate, returnDate, actualReturnDate,diffDays};
+                Object[] row = {id, bookID, borrowerName, bookName, phone, borrowDate, returnDate, actualReturnDate,diffDays,moneyRS};
                 modelBorrow.addRow(row);
             }
         } catch (Exception e) {
