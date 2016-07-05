@@ -256,7 +256,7 @@ public class BorrowDetail extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSubmitActionPerformed
 
-     public void getBorrowList(String query) {
+    public void getBorrowList(String query) {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Connection cn = MyConnect.getConnection();
@@ -278,19 +278,32 @@ public class BorrowDetail extends javax.swing.JFrame {
                     Date d2 = formatter.parse(returnDate);
                     long result = d1.getTime() - d2.getTime();
                     diffDays = result / (24 * 60 * 60 * 1000);
-                    long money = diffDays *  5000;
+                    long money = diffDays * 5000;
                     moneyRS = String.valueOf(money);
-                    if(diffDays < 0){
+                    if (diffDays < 0) {
                         diffDays = 0;
+                        moneyRS = "0";
+                    }
+                } else {
+                    Date d1 = formatter.parse(actualReturnDate);
+                    Date d2 = formatter.parse(returnDate);
+                    long result = d1.getTime() - d2.getTime();
+                    diffDays = result / (24 * 60 * 60 * 1000);
+//                    long money = diffDays *  5000;
+//                    moneyRS = String.valueOf(money);
+                    if (diffDays < 0) {
+                        diffDays = 0;
+                        moneyRS = "0";
                     }
                 }
-                Object[] row = {id, bookID, borrowerName, bookName, phone, borrowDate, returnDate, actualReturnDate,diffDays,moneyRS};
+                Object[] row = {id, bookID, borrowerName, bookName, phone, borrowDate, returnDate, actualReturnDate, diffDays, moneyRS};
                 modelBorrow.addRow(row);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     /**
      * @param args the command line arguments
      */

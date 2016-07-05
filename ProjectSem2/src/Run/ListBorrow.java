@@ -268,6 +268,18 @@ public class ListBorrow extends javax.swing.JFrame {
                     moneyRS = String.valueOf(money);
                     if(diffDays < 0){
                         diffDays = 0;
+                        moneyRS = "0";
+                    }
+                }else{
+                    Date d1 = formatter.parse(actualReturnDate);
+                    Date d2 = formatter.parse(returnDate);
+                    long result = d1.getTime() - d2.getTime();
+                    diffDays = result / (24 * 60 * 60 * 1000);
+//                    long money = diffDays *  5000;
+//                    moneyRS = String.valueOf(money);
+                    if(diffDays < 0){
+                        diffDays = 0;
+                        moneyRS = "0";
                     }
                 }
                 Object[] row = {id, bookID, borrowerName, bookName, phone, borrowDate, returnDate, actualReturnDate,diffDays,moneyRS};
